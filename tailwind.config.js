@@ -1,13 +1,20 @@
-/** @type {import('tailwindcss').Config} */
 const withMT = require("@material-tailwind/react/utils/withMT");
-export default withMT({
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+
+module.exports = withMT({
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "brand-green": "#94c840",
+        "brand-blue": "#1b4489",
+        "brand-gray": "#666666",
+      },
+      fontFamily: {
+        // Explicit font family names
+        "bbh-sans-bartle": ['"BBH Sans Bartle"', "sans-serif"],
+        "open-sans": ['"Open Sans"', "sans-serif"],
+      },
+    },
   },
   plugins: [],
 });
-
