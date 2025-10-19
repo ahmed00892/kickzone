@@ -1,21 +1,16 @@
-Project name: # kickzone
+# React + Vite
 
-Description:
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-KickZone is your go-to platform for booking football playgrounds anytime, anywhere. Whether you’re organizing a friendly 5-a-side match or a competitive league game, our easy-to-use system lets you find, reserve, and manage football pitches in just a few clicks. Save time, avoid hassle, and focus on what matters most — enjoying the beautiful game.
+Currently, two official plugins are available:
 
-Objective:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Kickzone aims to provide a simple and efficient platform for booking football playgrounds with ease.
-Our system allows users to view real-time availability and secure reservations instantly.
-We strive to save players time by eliminating traditional booking hassles.
-Kickzone connects football lovers with accessible fields in their area.
-Our goal is to create a seamless, reliable, and enjoyable reservation experience for every player.
+## React Compiler
 
-1-Ahmed Hassan Ahmed(Leader)
-2-Adel Ehab Adel
-3-Haneen Rabea 
-4-Mohamed Adham
-5-Jana Tamer
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
- 
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
