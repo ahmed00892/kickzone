@@ -5,8 +5,11 @@ import Login from "./pages/LogIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
+import Contact from "./pages/Contact.jsx";
+
 import { Route, Routes } from "react-router-dom";
 
+<pages />;
 function App() {
   return (
     <>
@@ -16,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
