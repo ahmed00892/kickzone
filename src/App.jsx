@@ -6,10 +6,13 @@ import SignUp from "./pages/SignUp.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { Route, Routes } from "react-router-dom";
 
+
 function App() {
   return (
     <>
+   
       <Header />
+    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
