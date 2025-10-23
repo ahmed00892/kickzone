@@ -113,11 +113,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
     >
-      <Link
-        to="/login"
-        className="w-full"
-        onClick={() => setOpenNav(false)}
-      >
+      <Link to="/login" className="w-full" onClick={() => setOpenNav(false)}>
         <Button
           fullWidth
           variant="text"
@@ -127,11 +123,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
           Log In
         </Button>
       </Link>
-      <Link
-        to="/signup"
-        className="w-full"
-        onClick={() => setOpenNav(false)}
-      >
+      <Link to="/signup" className="w-full" onClick={() => setOpenNav(false)}>
         <Button
           fullWidth
           variant="gradient"
@@ -173,7 +165,6 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
               {/* === CONDITIONAL AUTH RENDER === */}
               <div className="hidden items-center gap-x-3 lg:flex">
                 {isLoggedIn ? (
-                  // Pass props to ProfileMenu
                   <ProfileMenu user={user} onLogout={onLogout} />
                 ) : (
                   <>
@@ -292,16 +283,16 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                       </motion.li>
                     ))}
                   </motion.ul>
-                  
+
                   {/* === Mobile Auth Buttons === */}
                   {isLoggedIn ? (
-                     <motion.div
+                    <motion.div
                       className="flex flex-col gap-3 py-4 border-t border-white/20"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
                     >
-                       <Button
+                      <Button
                         fullWidth
                         variant="text"
                         size="sm"
@@ -327,13 +318,11 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
   );
 }
 
-// This is the part App.jsx imports
+// === This is what App.jsx imports ===
 const Header = ({ isLoggedIn, user, onLogout }) => (
   <header>
-    {/* Pass all props down to the Navbar */}
     <StickyNavbar isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
   </header>
 );
 
 export default Header;
-

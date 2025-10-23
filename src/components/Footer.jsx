@@ -8,7 +8,7 @@ const SITEMAP = [
   },
   {
     title: "Help Center",
-    links: ["Facebook", "Twitter", "Instgram", "Contact Us"],
+    links: ["Facebook", "Twitter", "Instagram", "Contact Us"],
   },
   {
     title: "Stadiums",

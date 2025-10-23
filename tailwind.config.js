@@ -10,13 +10,18 @@ module.exports = withMT({
         "brand-gray": "#666666",
       },
       fontFamily: {
-        // Explicit font family names
         "bbh-sans-bartle": ['"BBH Sans Bartle"', "sans-serif"],
         "open-sans": ['"Open Sans"', "sans-serif"],
       },
-    },
-    backgroundImage: {
-      "contact-bg": "url('/public/ball.jpeg')",
+      backgroundImage: {
+        home: "url('/homeImages/home.jpeg')",
+        stade: "url('/homeImages/stade.jpeg')",
+        stade2: "url('/homeImages/stade2.jpeg')",
+        stade3: "url('/homeImages/stade3.jpeg')",
+        about: "url('/homeImages/about.jpg')",
+        information: "url('/homeImages/information.jpg')",
+        "contact-bg": "url('/public/ball.jpeg')",
+      },
     },
   },
   plugins: [],
