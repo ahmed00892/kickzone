@@ -15,6 +15,9 @@ module.exports = withMT({
         "open-sans": ['"Open Sans"', "sans-serif"],
       },
     },
+    backgroundImage: {
+      "contact-bg": "url('/public/ball.jpeg')",
+    },
   },
   plugins: [],
 });
