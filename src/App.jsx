@@ -7,7 +7,11 @@ import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Contact from "./pages/Contact.jsx";
-
+import Stadium from "./pages/stadiums/Stadium";
+import StadiumDetails from "./pages/stadiums/StadiumDetails";
+import Cart from "./pages/Cart.jsx";
+import { BrowserRouter as Router } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth.js";
 
@@ -25,7 +29,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
-
+        <Route path="/stadiums" element={<Stadium />} />
+        <Route path="/stadiums/:id" element={<StadiumDetails />} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           path="/userprofile/1"
           element={
