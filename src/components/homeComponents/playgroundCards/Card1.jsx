@@ -15,7 +15,6 @@ function Card1() {
                  hover:shadow-[0_8px_35px_rgba(128,128,128,0.7)]
                  transition-all duration-500 transform hover:-translate-y-2 bg-white"
     >
-     
       <CardHeader
         floated={false}
         className="relative h-52 sm:h-56 md:h-60 lg:h-64 overflow-hidden rounded-t-2xl"
@@ -32,7 +31,10 @@ function Card1() {
           >
             Green Turf Stadium, Cairo
           </Typography>
-          <Typography color="blue-gray" className="text-xs sm:text-sm md:text-base">
+          <Typography
+            color="blue-gray"
+            className="text-xs sm:text-sm md:text-base"
+          >
             ⭐ 5.0
           </Typography>
         </div>
@@ -58,7 +60,6 @@ function Card1() {
         </div>
       </CardBody>
 
-      
       <CardFooter className="pt-1">
         <Button
           fullWidth

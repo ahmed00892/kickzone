@@ -1,0 +1,123 @@
+export const stadiumsData = [
+  {
+    id: 1,
+    name: "Green Turf Stadium",
+    location: "Cairo",
+    type: "11vs11",
+    description:
+      "Enjoy a professional-grade football field with night lighting, clean facilities, and top-tier turf quality — perfect for full 11-a-side matches.",
+    price: 56,
+    rating: 5.0,
+    image: "/homeImages/stade.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 2,
+    name: "Sunny Field",
+    location: "Giza",
+    type: "11vs11",
+    description:
+      "Perfect for 11-a-side games with synthetic grass, modern lighting, and seating for fans. Ideal for evening matches.",
+    price: 45,
+    rating: 4.8,
+    image: "/homeImages/stade2.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 3,
+    name: "Victory Field",
+    location: "Alexandria",
+    type: "11vs11",
+    description:
+      "Open football field with fresh grass and ocean breeze. Great for casual matches and training sessions.",
+    price: 30,
+    rating: 4.9,
+    image: "/homeImages/stade3.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 4,
+    name: "Elite Stadium",
+    location: "Nasr City",
+    type: "11vs11",
+    description:
+      "Premium synthetic pitch with high-quality lighting and locker rooms. Ideal for competitive matches and events.",
+    price: 60,
+    rating: 4.7,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+
+  {
+    id: 5,
+    name: "Street Legends Arena",
+    location: "Heliopolis",
+    type: "5vs5",
+    description:
+      "Compact field with smooth turf, LED lighting, and digital scoreboard. Great for fast-paced games.",
+    price: 25,
+    rating: 4.6,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 6,
+    name: "Mini KickZone",
+    location: "Giza",
+    type: "5vs5",
+    description:
+      "A cozy 5-a-side pitch with premium artificial grass and water cooling system. Designed for comfort and performance.",
+    price: 22,
+    rating: 4.8,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 7,
+    name: "Astro Arena",
+    location: "Alexandria",
+    type: "5vs5",
+    description:
+      "High-quality astro turf and clean facilities, perfect for small group games or quick training sessions.",
+    price: 28,
+    rating: 4.9,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 8,
+    name: "Goal Masters Field",
+    location: "6th of October",
+    type: "5vs5",
+    description:
+      "Excellent turf quality and covered seating for spectators. A fun choice for after-work matches.",
+    price: 24,
+    rating: 4.7,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 9,
+    name: "PlayZone 5",
+    location: "Cairo",
+    type: "5vs5",
+    description:
+      "Modern 5-a-side stadium with top lighting, locker rooms, and affordable rates. Great for both teams and events.",
+    price: 20,
+    rating: 4.5,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+  {
+    id: 10,
+    name: "Turbo Field",
+    location: "Maadi",
+    type: "5vs5",
+    description:
+      "Synthetic turf with smooth surface, convenient parking, and friendly staff. Great for quick matches.",
+    price: 23,
+    rating: 4.8,
+    image: "/homeImages/home.jpeg",
+    imageClass: "rounded-2xl shadow-lg",
+  },
+];
