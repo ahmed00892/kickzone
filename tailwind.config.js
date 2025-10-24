@@ -16,7 +16,8 @@ module.exports = withMT({
       },
     },
     backgroundImage: {
-      "contact-bg": "url('/public/ball.jpeg')",
+      "contact-bg": "url('/ball.jpeg')",
+      "about-bg": "url('/ball.jpeg')",
     },
   },
   plugins: [],
