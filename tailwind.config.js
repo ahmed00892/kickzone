@@ -5,9 +5,18 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        "brand-green": "#94c840",
-        "brand-blue": "#1b4489",
-        "brand-gray": "#666666",
+        light: {
+          "brand-green": "#94c840",
+          "brand-blue": "#1b4489",
+          "brand-gray": "#666666",
+        },
+        dark: {
+          "brand-green": "#3e5e10ff", // for background that was green or any text that was green
+          "brand-blue": "#082348ff", // this for the large texts like "Kick Zone"or "Login"
+          "brand-gray": "#262020ff", // as i used this in the header and footer
+          backgroud: "#000000ff", // this for the background for home or login
+          text: "#ffffffff", //----> this for you when you write in Home or Login as the background is dark
+        },
       },
       fontFamily: {
         "bbh-sans-bartle": ['"BBH Sans Bartle"', "sans-serif"],
