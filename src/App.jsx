@@ -14,7 +14,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth.js";
-
+import AddStadium from "./pages/stadiums/Addstadium.jsx";
 function App() {
   // Call the hook to get all auth state and functions
   const { user, isLoggedIn, login, logout, updateUser } = useAuth();
@@ -30,6 +30,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/stadiums" element={<Stadium />} />
+        <Route path="/addstadium" element={<AddStadium />} />
         <Route path="/stadiums/:id" element={<StadiumDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route

@@ -1,6 +1,6 @@
-// src/pages/stadiums/Stadiums.jsx
 import { Link } from "react-router-dom";
 import { stadiumsData } from "./data";
+import { Button } from "@material-tailwind/react";
 
 export default function Stadiums() {
   const fullStadiums = stadiumsData.filter((s) => s.type === "11vs11");
@@ -25,13 +25,16 @@ export default function Stadiums() {
               {s.description}
             </p>
           </div>
+
           <div className="flex justify-between items-center mt-3">
             <div className="text-blue-600 font-semibold">
               ${s.price}.00 / hour
             </div>
             <div className="text-black-500">⭐ {s.rating}</div>
           </div>
-          <Link to={`/stadiums/${s.id}`}>
+
+          {/* ✅ BOOK NOW button navigates to stadium details or booking page */}
+          <Link to={`/addstadium/${s.id}`}>
             <div className="flex justify-center items-center mt-4 mb-3">
               <button
                 className="w-full bg-brand-green text-white py-2.5 rounded-xl shadow-md 
@@ -48,15 +51,31 @@ export default function Stadiums() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
+      {/* ✅ Add Stadium Button */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Stadiums</h1>
+
+        {/* ✅ Navigates to /addstadium page */}
+        <Link to="/addstadium">
+          <Button
+            color="green"
+            className="bg-brand-green text-white font-semibold px-6 py-2 rounded-xl 
+            shadow-md hover:bg-brand-green/90 hover:shadow-lg transition-all duration-200"
+          >
+            + Add Stadium
+          </Button>
+        </Link>
+      </div>
+
       <h1 className="text-3xl font-bold mb-6 text-gray-800">11vs11 Pitches</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {renderCards(fullStadiums)}
       </div>
+
       <h1 className="text-3xl font-bold mb-6 text-gray-800">5vs5 Pitches</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {renderCards(miniPitches)}
       </div>
-         
     </div>
   );
 }
