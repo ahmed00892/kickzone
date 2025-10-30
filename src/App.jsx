@@ -7,12 +7,18 @@ import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Contact from "./pages/Contact.jsx";
+import Stadium from "./pages/stadiums/Stadium";
+import StadiumDetails from "./pages/stadiums/StadiumDetails";
+import Cart from "./pages/Cart.jsx";
+import ViewStadiums from "./pages/admin/ViewStadiums.jsx";
+import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
 
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth.js";
+import UserProtectedRoute from "./context/UserProtectedRoute.jsx";
+import AdminProtectedRoute from "./context/AdminProtectedRoute.jsx";
 
 function App() {
-  // Call the hook to get all auth state and functions
   const { user, isLoggedIn, login, logout, updateUser } = useAuth();
 
   return (
@@ -20,33 +26,60 @@ function App() {
       <Header isLoggedIn={isLoggedIn} user={user} onLogout={logout} />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+           <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/stadiums" element={<Stadium />} />
+        <Route path="/stadiums/:id" element={<StadiumDetails />} />
+
        
+        <Route
+          path="/profile"
+          element={
+            <UserProtectedRoute>
+              <Profile user={user} />
+            </UserProtectedRoute>
+          }
+        />
 
         <Route
-          path="/userprofile/1"
+          path="/profile/edit"
           element={
-            isLoggedIn ? (
-              <Profile user={user} /> // Pass user data to Profile
-            ) : (
-              <Navigate to="/login" replace /> // Redirect if not logged in
-            )
+            <UserProtectedRoute>
+              <EditProfile user={user} onUpdateUser={updateUser} />
+            </UserProtectedRoute>
           }
         />
+
         <Route
-          path="/userprofile/1/edit"
+          path="/cart"
           element={
-            isLoggedIn ? (
-              <EditProfile user={user} onUpdateUser={updateUser} /> // Pass user data to EditProfile
-            ) : (
-              <Navigate to="/login" replace /> // Redirect if not logged in
-            )
+            <UserProtectedRoute>
+              <Cart />
+            </UserProtectedRoute>
           }
         />
+
+        
+        <Route
+          path="/admin/view"
+          element={
+            <AdminProtectedRoute>
+              <ViewStadiums />
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/stadiums/:id"
+          element={
+            <AdminProtectedRoute>
+              <AdminStadiumDetails />
+            </AdminProtectedRoute>
+          }
+        />
+
 
         <Route path="*" element={<NotFound />} />
       </Routes>
