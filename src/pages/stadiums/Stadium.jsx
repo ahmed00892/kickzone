@@ -34,7 +34,7 @@ export default function Stadiums() {
           </div>
 
           {/* ✅ BOOK NOW button navigates to stadium details or booking page */}
-          <Link to={`/addstadium/${s.id}`}>
+          <Link to={`/stadiums/${s.id}`}>
             <div className="flex justify-center items-center mt-4 mb-3">
               <button
                 className="w-full bg-brand-green text-white py-2.5 rounded-xl shadow-md 
@@ -71,7 +71,6 @@ export default function Stadiums() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {renderCards(fullStadiums)}
       </div>
-
 
       <h1 className="text-3xl font-bold mb-6 text-gray-800">5vs5 Pitches</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
