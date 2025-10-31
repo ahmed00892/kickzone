@@ -30,7 +30,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/stadiums" element={<Stadium />} />
-        <Route path="/addstadium" element={<AddStadium />} />
         <Route path="/stadiums/:id" element={<StadiumDetails />} />
          <Route path="/addstadium" element={<AddStadium />} />
         <Route path="/cart" element={<Cart />} />
