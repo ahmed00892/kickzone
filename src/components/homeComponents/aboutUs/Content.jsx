@@ -1,6 +1,9 @@
 import { Button } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 function Content() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex-1 text-center lg:text-left">
       <h1 className="text-3xl sm:text-4xl font-bold text-brand-blue mb-4">
@@ -32,6 +35,7 @@ function Content() {
         className="text-white/90 bg-brand-green hover:bg-green-400 
                    text-sm sm:text-base transition-all duration-300 
                    hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+        onClick={() => navigate("/about")}
       >
         Learn More
       </Button>
