@@ -31,6 +31,8 @@ export default function Stadiums() {
             </div>
             <div className="text-black-500">⭐ {s.rating}</div>
           </div>
+
+          {/* ✅ زر Book Now */}
           <Link to={`/stadiums/${s.id}`}>
             <div className="flex justify-center items-center mt-4 mb-3">
               <button
@@ -48,15 +50,30 @@ export default function Stadiums() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
+      {/* ✅ زر الانتقال إلى صفحة إضافة ملعب */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Stadiums</h1>
+
+        <Link to="/addstadium">
+          <button
+            className="bg-brand-green text-white px-6 py-2.5 rounded-xl shadow-md 
+            hover:bg-brand-green/90 hover:scale-[1.03] hover:shadow-lg hover:-translate-y-0.5 
+            active:scale-95 transition-all duration-200 font-open-sans"
+          >
+            + Add Stadium
+          </button>
+        </Link>
+      </div>
+
       <h1 className="text-3xl font-bold mb-6 text-gray-800">11vs11 Pitches</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {renderCards(fullStadiums)}
       </div>
+
       <h1 className="text-3xl font-bold mb-6 text-gray-800">5vs5 Pitches</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {renderCards(miniPitches)}
       </div>
-         
     </div>
   );
 }
