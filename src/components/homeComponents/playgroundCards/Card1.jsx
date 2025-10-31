@@ -6,8 +6,10 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 function Card1() {
+  const navigate = useNavigate();
   return (
     <Card
       className="w-[260px] sm:w-[300px] md:w-[340px] lg:w-[360px] xl:w-[380px]
@@ -66,6 +68,7 @@ function Card1() {
           className="text-white/90 bg-brand-green hover:bg-green-400 
                      text-xs sm:text-sm md:text-base transition-all duration-300
                      hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+          onClick={() => navigate("/stadiums/1")}
         >
           Book Now
         </Button>

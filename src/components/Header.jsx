@@ -10,13 +10,14 @@ import { Link } from "react-router-dom";
 import { ProfileMenu } from "./ProfileMenu"; // Import ProfileMenu
 import { Badge } from "@material-tailwind/react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useCart } from "../context/CartContext";
 
 // Header now accepts props from App.jsx
 export function StickyNavbar({ isLoggedIn, user, onLogout }) {
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
-  const cart = [];
+  const { cart } = useCart();
 
   React.useEffect(() => {
     window.addEventListener(
