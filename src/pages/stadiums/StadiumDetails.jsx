@@ -105,7 +105,7 @@ export default function StadiumDetails() {
         <button
           onClick={() => {
             navigate("/stadiums");
-            window.scrollTo(0, 0); // 👈 scrolls to top after navigation
+            //window.scrollTo(0, 0); // 👈 scrolls to top after navigation
           }}
           className="bg-brand-blue text-white px-6 py-2.5 rounded-xl shadow-md 
     hover:bg-brand-blue/90 hover:shadow-lg hover:-translate-y-0.5 
