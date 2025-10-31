@@ -1,6 +1,6 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
+import withMT from "@material-tailwind/react/utils/withMT";
 
-module.exports = withMT({
+export default withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -29,7 +29,8 @@ module.exports = withMT({
         stade3: "url('/homeImages/stade3.jpeg')",
         about: "url('/homeImages/about.jpg')",
         information: "url('/homeImages/information.jpg')",
-        "contact-bg": "url('/public/ball.jpeg')",
+        "contact-bg": "url('/ball.jpeg')",
+        "about-bg": "url('/ball.jpeg')",
       },
     },
   },

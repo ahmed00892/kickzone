@@ -7,16 +7,23 @@ import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Contact from "./pages/Contact.jsx";
-
+import About from "./pages/About.jsx";
+import Stadium from "./pages/stadiums/Stadium";
+import StadiumDetails from "./pages/stadiums/StadiumDetails";
+import Cart from "./pages/Cart.jsx";
+import ScrollToTop from "./components/ScrollToTop";
+import { BrowserRouter as Router } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth.js";
-
+import AddStadium from "./pages/stadiums/Addstadium.jsx";
 function App() {
   // Call the hook to get all auth state and functions
   const { user, isLoggedIn, login, logout, updateUser } = useAuth();
 
   return (
-    <>
+    <CartProvider>
+      <ScrollToTop />
       <Header isLoggedIn={isLoggedIn} user={user} onLogout={logout} />
 
       <Routes>
@@ -25,7 +32,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
-
+        <Route path="/stadiums" element={<Stadium />} />
+        <Route path="/stadiums/:id" element={<StadiumDetails />} />
+        <Route path="/addstadium" element={<AddStadium />} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           path="/userprofile/1"
           element={
@@ -48,10 +58,11 @@ function App() {
         />
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/about" element={<About />} />
       </Routes>
 
       <Footer />
-    </>
+    </CartProvider>
   );
 }
 

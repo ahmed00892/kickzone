@@ -7,10 +7,16 @@ import {
 } from "@material-tailwind/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ProfileMenu } from "./ProfileMenu"; // Import ProfileMenu
+import { Badge } from "@material-tailwind/react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useCart } from "../context/CartContext";
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+
+  const { cart } = useCart();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -28,10 +34,10 @@ export function StickyNavbar() {
   }, []);
 
   const navItems = [
-    { label: "Pages", path: "/" },
-    { label: "Account", path: "/profile" },
-    { label: "Blocks", path: "/" },
-    { label: "Docs", path: "/" },
+    { label: "Home", path: "/" },
+    { label: "Stadiums", path: "/stadiums" },
+    { label: "About us", path: "/about" },
+    { label: "Contact", path: "/contact" },
   ];
 
   const navList = (
@@ -165,6 +171,16 @@ export function StickyNavbar() {
                   </Link>
                 </motion.div>
               </div>
+              {/* === END CONDITIONAL AUTH RENDER === */}
+              {/* === CART ICON === */}
+              <Link to="/cart">
+                <Badge content={cart?.length || 0} color="green">
+                  <IconButton variant="text" color="white">
+                    <ShoppingCartIcon className="h-6 w-6 text-white" />
+                  </IconButton>
+                </Badge>
+              </Link>
+              {/* === END CART ICON === */}
 
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <IconButton
