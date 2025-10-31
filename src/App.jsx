@@ -10,6 +10,7 @@ import Contact from "./pages/Contact.jsx";
 import Stadium from "./pages/stadiums/Stadium";
 import StadiumDetails from "./pages/stadiums/StadiumDetails";
 import Cart from "./pages/Cart.jsx";
+import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -20,7 +21,8 @@ function App() {
   const { user, isLoggedIn, login, logout, updateUser } = useAuth();
 
   return (
-    <>
+    <CartProvider>
+      <ScrollToTop />
       <Header isLoggedIn={isLoggedIn} user={user} onLogout={logout} />
 
       <Routes>
@@ -58,7 +60,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </>
+    </CartProvider>
   );
 }
 
