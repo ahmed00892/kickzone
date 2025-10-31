@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Contact from "./pages/Contact.jsx";
+import About from "./pages/About.jsx";
 import Stadium from "./pages/stadiums/Stadium";
 import StadiumDetails from "./pages/stadiums/StadiumDetails";
 import Cart from "./pages/Cart.jsx";
@@ -57,6 +58,7 @@ function App() {
         />
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/about" element={<About />} />
       </Routes>
 
       <Footer />
