@@ -7,10 +7,17 @@ import {
 } from "@material-tailwind/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ProfileMenu } from "./ProfileMenu"; // Import ProfileMenu
+import { Badge } from "@material-tailwind/react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useCart } from "../context/CartContext";
 
-export function StickyNavbar() {
+// Header now accepts props from App.jsx
+export function StickyNavbar({ isLoggedIn, user, onLogout }) {
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+
+  const { cart } = useCart();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -29,9 +36,9 @@ export function StickyNavbar() {
 
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "Profile", path: "/profile" },
-    { label: "Stadiums", path: "/" },
-    { label: "About us", path: "/" },
+    { label: "Stadiums", path: "/stadiums" },
+    { label: "About us", path: "/about" },
+    { label: "Contact", path: "/contact" },
   ];
 
   const navList = (
@@ -104,6 +111,37 @@ export function StickyNavbar() {
     }),
   };
 
+  // --- Login/Signup buttons for mobile nav ---
+  const mobileAuthButtons = (
+    <motion.div
+      className="flex flex-col gap-3 py-4 border-t border-white/20"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4 }}
+    >
+      <Link to="/login" className="w-full" onClick={() => setOpenNav(false)}>
+        <Button
+          fullWidth
+          variant="text"
+          size="sm"
+          className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors"
+        >
+          Log In
+        </Button>
+      </Link>
+      <Link to="/signup" className="w-full" onClick={() => setOpenNav(false)}>
+        <Button
+          fullWidth
+          variant="gradient"
+          size="sm"
+          className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg"
+        >
+          Sign Up
+        </Button>
+      </Link>
+    </motion.div>
+  );
+
   return (
     <div className="w-full">
       <motion.div
@@ -130,41 +168,58 @@ export function StickyNavbar() {
             <div className="flex items-center gap-4">
               <div className="mr-4 hidden lg:block">{navList}</div>
 
-              <div className="flex items-center gap-x-3">
-                <motion.div
-                  variants={buttonVariants}
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <Link to="/login">
-                    <Button
-                      variant="text"
-                      size="sm"
-                      className="hidden lg:inline-block text-brand-blue font-open-sans hover:text-gray-200 border border-white/20 hover:border-white/40 transition-colors"
+              {/* === CONDITIONAL AUTH RENDER === */}
+              <div className="hidden items-center gap-x-3 lg:flex">
+                {isLoggedIn ? (
+                  <ProfileMenu user={user} onLogout={onLogout} />
+                ) : (
+                  <>
+                    <motion.div
+                      variants={buttonVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      whileTap="tap"
                     >
-                      <span>Log In</span>
-                    </Button>
-                  </Link>
-                </motion.div>
+                      <Link to="/login">
+                        <Button
+                          variant="text"
+                          size="sm"
+                          className="text-brand-blue font-open-sans hover:text-gray-200 border border-white/20 hover:border-white/40 transition-colors"
+                        >
+                          <span>Log In</span>
+                        </Button>
+                      </Link>
+                    </motion.div>
 
-                <motion.div
-                  variants={buttonVariants}
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <Link to="/signup">
-                    <Button
-                      variant="gradient"
-                      size="sm"
-                      className="hidden lg:inline-block bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all"
+                    <motion.div
+                      variants={buttonVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      whileTap="tap"
                     >
-                      <span>Sign Up</span>
-                    </Button>
-                  </Link>
-                </motion.div>
+                      <Link to="/signup">
+                        <Button
+                          variant="gradient"
+                          size="sm"
+                          className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all"
+                        >
+                          <span>Sign Up</span>
+                        </Button>
+                      </Link>
+                    </motion.div>
+                  </>
+                )}
               </div>
+              {/* === END CONDITIONAL AUTH RENDER === */}
+              {/* === CART ICON === */}
+              <Link to="/cart">
+                <Badge content={cart?.length || 0} color="green">
+                  <IconButton variant="text" color="white">
+                    <ShoppingCartIcon className="h-6 w-6 text-white" />
+                  </IconButton>
+                </Badge>
+              </Link>
+              {/* === END CART ICON === */}
 
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <IconButton
@@ -244,41 +299,30 @@ export function StickyNavbar() {
                     ))}
                   </motion.ul>
 
-                  <motion.div
-                    className="flex flex-col gap-3 py-4 border-t border-white/20"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <Link
-                      to="/login"
-                      className="w-full"
-                      onClick={() => setOpenNav(false)}
+                  {/* === Mobile Auth Buttons === */}
+                  {isLoggedIn ? (
+                    <motion.div
+                      className="flex flex-col gap-3 py-4 border-t border-white/20"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
                     >
                       <Button
                         fullWidth
                         variant="text"
                         size="sm"
-                        className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors"
+                        className="text-red-500 font-open-sans border border-white/20 hover:border-white/40 transition-colors"
+                        onClick={() => {
+                          onLogout();
+                          setOpenNav(false);
+                        }}
                       >
-                        Log In
+                        Sign Out
                       </Button>
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="w-full"
-                      onClick={() => setOpenNav(false)}
-                    >
-                      <Button
-                        fullWidth
-                        variant="gradient"
-                        size="sm"
-                        className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg"
-                      >
-                        Sign Up
-                      </Button>
-                    </Link>
-                  </motion.div>
+                    </motion.div>
+                  ) : (
+                    mobileAuthButtons
+                  )}
                 </div>
               </motion.div>
             )}
@@ -289,9 +333,10 @@ export function StickyNavbar() {
   );
 }
 
-const Header = () => (
+// === This is what App.jsx imports ===
+const Header = ({ isLoggedIn, user, onLogout }) => (
   <header>
-    <StickyNavbar />
+    <StickyNavbar isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
   </header>
 );
 
