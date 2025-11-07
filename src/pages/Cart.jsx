@@ -1,18 +1,28 @@
 import { Card, Typography, Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, removeFromCart, clearCart } = useCart();
+  const { isLoggedIn } = useAuth(); // ✅ get login status
+  console.log("Cart - isLoggedIn:", isLoggedIn);
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-  // ✅ Payment handler with redirect
+  // Payment handler with redirect
   const handleProceedPayment = () => {
+    if (!isLoggedIn) {
+      // Redirect guest to login
+      navigate("/login");
+      return;
+    }
+
+    // Logged-in user can proceed
     alert("✅ Payment successful! Stadium reserved!");
     clearCart();
-    navigate("/"); // 👈 Redirect to homepage after reservation
+    navigate("/"); // Redirect to homepage
   };
 
   return (
@@ -70,9 +80,16 @@ export default function Cart() {
             <Typography variant="h5" className="mb-3">
               Total: <span className="text-green-600">${total}.00</span>
             </Typography>
+
+            {!isLoggedIn && (
+              <Typography color="gray" variant="small" className="mb-2">
+                Log in to reserve a stadium
+              </Typography>
+            )}
+
             <button
               onClick={handleProceedPayment}
-              className="mt-6 w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition"
+              className="mt-6 w-full py-3 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
             >
               Proceed to Payment
             </button>
