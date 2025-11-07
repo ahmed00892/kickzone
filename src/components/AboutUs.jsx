@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, CardBody, Button } from "@material-tailwind/react";
 import { Users, Target, Award, Clock, MapPin, Trophy } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function AboutUs() {
+  const navigate = useNavigate();
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       {/* Hero Section */}
@@ -318,6 +321,7 @@ export default function AboutUs() {
           <Button
             size="lg"
             className="bg-white text-green-700 hover:bg-gray-100 shadow-xl font-bold px-8 py-4 text-lg"
+            onClick={() => navigate("/stadiums")}
           >
             Reserve Your Court Today
           </Button>

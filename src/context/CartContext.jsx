@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -5,22 +6,13 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  // Add item to cart
-  const addToCart = (item) => {
-    setCart((prev) => [...prev, item]);
-  };
-
-  // Remove one item from cart (by id + hour combo)
+  const addToCart = (item) => setCart((prev) => [...prev, item]);
   const removeFromCart = (stadiumId, hour) => {
     setCart((prev) =>
       prev.filter((i) => !(i.stadiumId === stadiumId && i.hour === hour))
     );
   };
-
-  // Clear all items
-  const clearCart = () => {
-    setCart([]);
-  };
+  const clearCart = () => setCart([]);
 
   return (
     <CartContext.Provider
@@ -31,5 +23,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// Hook for easy use
 export const useCart = () => useContext(CartContext);
