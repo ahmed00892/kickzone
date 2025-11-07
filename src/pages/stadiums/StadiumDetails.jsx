@@ -8,7 +8,8 @@ import { useCart } from "../../context/CartContext";
 export default function StadiumDetails() {
   const { id } = useParams();
   const stadium = stadiumsData.find((s) => s.id === parseInt(id));
-  const [selectedHour, setSelectedHour] = useState("");
+  const [selectedHour, setSelectedHour] = useState([]);
+  const [reservedHours, setReservedHours] = useState([]);
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const hours = Array.from({ length: 16 }, (_, i) => `${8 + i}:00`);
@@ -49,14 +50,23 @@ export default function StadiumDetails() {
           Choose Reservation Hour:
         </label>
         <select
+          multiple
           value={selectedHour}
-          onChange={(e) => setSelectedHour(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2 w-full mb-4"
+          onChange={(e) =>
+            setSelectedHour(
+              Array.from(e.target.selectedOptions, (option) => option.value)
+            )
+          }
+          className="border border-gray-300 rounded-lg p-2 w-full mb-4 h-40"
         >
           <option value="">Select an hour...</option>
           {hours.map((hour, i) => (
-            <option key={i} value={hour}>
-              {hour}
+            <option
+              key={i}
+              value={hour}
+              disabled={reservedHours.includes(hour)}
+            >
+              {hour} {reservedHours.includes(hour) ? " (Reserved)" : ""}
             </option>
           ))}
         </select>
@@ -64,21 +74,28 @@ export default function StadiumDetails() {
         <button
           className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors duration-200"
           onClick={() => {
-            if (!selectedHour) {
-              alert("Please select a reservation hour first!");
+            if (!selectedHour || selectedHour.length === 0) {
+              alert("Please select at least one reservation hour!");
               return;
             }
 
-            addToCart({
-              stadiumId: stadium.id,
-              name: stadium.name,
-              hour: selectedHour,
-              price: stadium.price,
-              image: stadium.image,
+            selectedHour.forEach((hour) => {
+              addToCart({
+                stadiumId: stadium.id,
+                name: stadium.name,
+                hour,
+                price: stadium.price,
+                image: stadium.image,
+              });
             });
 
-            // Optional small feedback message:
-            alert(`Added ${stadium.name} at ${selectedHour} to your cart!`);
+            setReservedHours((prev) => [...prev, ...selectedHour]);
+            alert(
+              `Added ${selectedHour.length} reservation${
+                selectedHour.length > 1 ? "s" : ""
+              } for ${stadium.name} to your cart!`
+            );
+            setSelectedHour([]);
           }}
         >
           Add to Cart
@@ -86,10 +103,13 @@ export default function StadiumDetails() {
       </div>
       <div className="mt-8 flex justify-start">
         <button
-          onClick={() => navigate("/stadiums")}
+          onClick={() => {
+            navigate("/stadiums");
+            //window.scrollTo(0, 0); // 👈 scrolls to top after navigation
+          }}
           className="bg-brand-blue text-white px-6 py-2.5 rounded-xl shadow-md 
-            hover:bg-brand-blue/90 hover:shadow-lg hover:-translate-y-0.5 
-            active:scale-95 transition-all duration-200 font-open-sans"
+    hover:bg-brand-blue/90 hover:shadow-lg hover:-translate-y-0.5 
+    active:scale-95 transition-all duration-200 font-open-sans"
         >
           ← Back to Stadiums
         </button>

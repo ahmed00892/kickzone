@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 const SITEMAP = [
   {
     title: "Company",
-    links: ["About Us", "Careers", "Our Team", "Matches"],
+    links: ["About Us", "Careers", "Our Team", "Projects"],
   },
   {
     title: "Help Center",
-    links: ["Facebook", "Twitter", "Instagram", "Contact Us"],
+    links: ["Discord", "Twitter", "GitHub", "Contact Us"],
   },
   {
-    title: "Stadiums",
-    links: ["Full stadiums", "5v5 stadiums"],
+    title: "Products",
+    links: ["Templates", "UI Kits", "Icons", "Mockups"],
   },
 ];
 
@@ -72,7 +72,7 @@ export function FooterWithSitemap() {
             <motion.div key={key} variants={itemVariants}>
               <Typography
                 variant="small"
-                className="mb-6 font-bold uppercase text-brand-blue text-lg border-b-2 border-brand-green pb-2 font-bbh-sans-bartle"
+                className="mb-6 font-bold uppercase text-light-brand-blue text-lg border-b-2 border-brand-green pb-2 font-bbh-sans-bartle"
               >
                 {title}
               </Typography>
