@@ -8,11 +8,6 @@ import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
-import Cart from "./pages/Cart.jsx";
-import EditStadium from "./pages/EditStadium.jsx";
-import { Route, Routes } from "react-router-dom";
-<pages />;
-
 import Stadium from "./pages/stadiums/Stadium";
 import StadiumDetails from "./pages/stadiums/StadiumDetails";
 import Cart from "./pages/Cart.jsx";
