@@ -1,7 +1,7 @@
 import { Card, Typography, Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Cart() {
   const navigate = useNavigate();
