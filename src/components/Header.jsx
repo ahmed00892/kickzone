@@ -22,6 +22,8 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
+  const { cart } = useCart();
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -39,8 +41,9 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
 
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "Stadiums", path: "/" },
-    { label: "About us", path: "/" },
+    { label: "Stadiums", path: "/stadiums" },
+    { label: "About us", path: "/about" },
+    { label: "Contact", path: "/contact" },
   ];
 
   const navList = (
@@ -112,45 +115,6 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
       transition: { delay: i * 0.1, duration: 0.3 },
     }),
   };
-
-  // --- Login/Signup buttons for mobile nav ---
-  const mobileAuthButtons = (
-    <motion.div
-      className="flex flex-col gap-3 py-4 border-t border-white/20"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 }}
-    >
-      <Link
-        to="/login"
-        className="w-full"
-        onClick={() => setOpenNav(false)}
-      >
-        <Button
-          fullWidth
-          variant="text"
-          size="sm"
-          className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors"
-        >
-          Log In
-        </Button>
-      </Link>
-      <Link
-        to="/signup"
-        className="w-full"
-        onClick={() => setOpenNav(false)}
-      >
-        <Button
-          fullWidth
-          variant="gradient"
-          size="sm"
-          className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg"
-        >
-          Sign Up
-        </Button>
-      </Link>
-    </motion.div>
-  );
 
   return (
     <div className="w-full">
