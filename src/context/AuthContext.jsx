@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// MOCK USER DATA
+// 1. Create the Context
+const AuthContext = createContext(null);
+
+// MOCK USER DATA (Same as before)
 const MOCK_USER_DATA = {
   name: "Abdelghafour KickZone",
   email: "Abdelghafour@kickzone.com",
@@ -17,65 +20,77 @@ const MOCK_USER_DATA = {
   matchesPlayed: 78,
 };
 
-export const useAuth = () => {
+// 2. Create the Provider Component
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = !!user; 
   const navigate = useNavigate();
 
-  // On initial app load, check localStorage for a saved user session
+  // Initialize state from localStorage on first load
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("kickzoneUser");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
-        setIsLoggedIn(true);
       }
     } catch (error) {
       console.error("Failed to parse user from localStorage", error);
-      localStorage.removeItem("kickzoneUser"); // Clear corrupted data
+      localStorage.removeItem("kickzoneUser");
     }
   }, []);
 
-  // Function to be passed to the Login page
   const login = (email, password) => {
     if (
       email.toLowerCase() === MOCK_USER_DATA.email.toLowerCase() &&
       password === MOCK_USER_DATA.password
     ) {
-      localStorage.setItem("kickzoneUser", JSON.stringify(MOCK_USER_DATA));
-      setUser(MOCK_USER_DATA);
-      setIsLoggedIn(true);
+      const { password: mockPassword, ...safeUserData } = MOCK_USER_DATA;
+      
+      localStorage.setItem("kickzoneUser", JSON.stringify(safeUserData));
+      setUser(safeUserData);
       navigate("/");
       return true;
     }
     return false;
   };
 
-  // Function to be passed to the Header's ProfileMenu
   const logout = () => {
     localStorage.removeItem("kickzoneUser");
     setUser(null);
-    setIsLoggedIn(false);
-    navigate("/login"); 
+    navigate("/login");
   };
-  // This function will be called by the EditProfile page
+
   const updateUser = (newUserData) => {
-    
     try {
-      // Get the currently stored user to merge
       const storedUser = JSON.parse(localStorage.getItem("kickzoneUser")) || {};
-      // Merge the old user data with the new form data
       const updatedUser = { ...storedUser, ...newUserData };
-      
-      // Save the updated user to state and localStorage
       setUser(updatedUser);
       localStorage.setItem("kickzoneUser", JSON.stringify(updatedUser));
-      
-      return true; 
+      return true;
     } catch (error) {
       console.error("Failed to update user:", error);
-      return false; 
+      return false;
     }
   };
-  return { user, isLoggedIn, login, logout, updateUser};
+
+  // 3. The value object that will be shared across the app
+  const value = {
+    user,
+    isLoggedIn,
+    login,
+    logout,
+    updateUser,
+  };
+
+  // 4. Return the Provider wrapping children
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+// 5. Custom hook to use the context easily
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

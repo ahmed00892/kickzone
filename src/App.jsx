@@ -6,8 +6,20 @@ import SignUp from "./pages/SignUp.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Profile from "./pages/Profile.jsx";
 import EditProfile from "./pages/EditProfile.jsx";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth.js";
+import Contact from "./pages/Contact.jsx";
+import About from "./pages/About.jsx";
+import Stadium from "./pages/stadiums/Stadium";
+import StadiumDetails from "./pages/stadiums/StadiumDetails";
+import Cart from "./pages/Cart.jsx";
+import ViewStadiums from "./pages/admin/ViewStadiums.jsx";
+import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
+import AddStadium from "./pages/stadiums/Addstadium.jsx";
+
+import ScrollToTop from "./components/ScrollToTop";
+import { Route, Routes } from "react-router-dom";
+import { useAuth } from "./context/AuthContext.jsx";
+import UserProtectedRoute from "./context/UserProtectedRoute.jsx";
+import AdminProtectedRoute from "./context/AdminProtectedRoute.jsx";
 
 function App() {
   // Call the hook to get all auth state and functions

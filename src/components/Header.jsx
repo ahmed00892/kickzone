@@ -7,10 +7,18 @@ import {
 } from "@material-tailwind/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ProfileMenu } from "./ProfileMenu"; // Import ProfileMenu
+import { ProfileMenu } from "./ProfileMenu";
+import { Badge } from "@material-tailwind/react";
+import {
+  ShoppingCartIcon,
+  SunIcon,
+  MoonIcon,
+} from "@heroicons/react/24/outline";
+import { useCart } from "../context/CartContext";
+import { useTheme } from "../context/ThemeContext";
 
-// Header now accepts props from App.jsx
 export function StickyNavbar({ isLoggedIn, user, onLogout }) {
+  const { theme, toggleTheme } = useTheme();
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -47,7 +55,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
           <Typography
             as="div"
             variant="small"
-            className="p-1 font-open-sans text-black hover:text-brand-blue transition-colors"
+            className="p-1 font-open-sans text-black hover:text-brand-blue dark:text-dark-text dark:hover:text-white transition-colors"
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -154,14 +162,17 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
         <Navbar
           className={`sticky top-0 z-50 h-max max-w-full rounded-none px-4 py-3 lg:px-8 lg:py-4 bg-brand-green text-white shadow-2xl font-bbh-sans-bartle backdrop-blur-sm border-none transition-all duration-300 ${
             scrolled ? "bg-brand-green/95 shadow-xl" : "bg-brand-green"
-          }`}
+          }
+          // --- HERE IS THE CHANGE ---
+          dark:bg-dark-bg dark:shadow-dark-surface/50
+          `}
         >
           <div className="flex items-center justify-between">
             <motion.div variants={logoVariants} whileHover="hover">
               <Typography
                 as="a"
                 href="#"
-                className="mr-4 cursor-pointer py-1.5 font-bold text-xl bg-gradient-to-r from-white to-gray-200 bg-clip-text text-brand-blue font-bbh-sans-bartle"
+                className="mr-4 cursor-pointer py-1.5 font-bold text-xl bg-gradient-to-r from-white to-gray-200 bg-clip-text text-brand-blue dark:text-brand-blue font-bbh-sans-bartle"
               >
                 Kick Zone
               </Typography>
@@ -169,13 +180,12 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
 
             <div className="flex items-center gap-4">
               <div className="mr-4 hidden lg:block">{navList}</div>
-
-              {/* === CONDITIONAL AUTH RENDER === */}
-              <div className="hidden items-center gap-x-3 lg:flex">
+              <div className="flex items-center gap-x-3">
                 {isLoggedIn ? (
-                  // Pass props to ProfileMenu
+                  // If logged in, show the ProfileMenu
                   <ProfileMenu user={user} onLogout={onLogout} />
                 ) : (
+                  // If not logged in, show Log In and Sign Up
                   <>
                     <motion.div
                       variants={buttonVariants}
@@ -187,7 +197,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                         <Button
                           variant="text"
                           size="sm"
-                          className="text-brand-blue font-open-sans hover:text-gray-200 border border-white/20 hover:border-white/40 transition-colors"
+                          className="hidden lg:inline-block text-brand-blue font-open-sans hover:text-gray-200 border border-white/20 hover:border-white/40 transition-colors"
                         >
                           <span>Log In</span>
                         </Button>
@@ -204,7 +214,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                         <Button
                           variant="gradient"
                           size="sm"
-                          className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all"
+                          className="hidden lg:inline-block bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all"
                         >
                           <span>Sign Up</span>
                         </Button>
@@ -214,6 +224,31 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                 )}
               </div>
               {/* === END CONDITIONAL AUTH RENDER === */}
+
+              {/* === THEME TOGGLE BUTTON (Desktop) === */}
+              <IconButton
+                variant="text"
+                color="white"
+                onClick={toggleTheme}
+                className="text-white dark:text-dark-text"
+              >
+                {theme === "light" ? (
+                  <MoonIcon className="h-6 w-6" />
+                ) : (
+                  <SunIcon className="h-6 w-6" />
+                )}
+              </IconButton>
+              {/* === END THEME TOGGLE BUTTON === */}
+
+              {/* === CART ICON === */}
+              <Link to="/cart">
+                <Badge content={cart?.length || 0} color="green">
+                  <IconButton variant="text" color="white">
+                    <ShoppingCartIcon className="h-6 w-6 text-white" />
+                  </IconButton>
+                </Badge>
+              </Link>
+              {/* === END CART ICON === */}
 
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <IconButton
@@ -265,7 +300,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                 initial="closed"
                 animate="open"
                 exit="closed"
-                className="lg:hidden overflow-hidden"
+                className="lg:hidden overflow-hidden dark:bg-dark-surface rounded-lg"
               >
                 <div className="container mx-auto">
                   <motion.ul className="flex flex-col gap-2 py-4">
@@ -280,7 +315,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                         <Typography
                           as="div"
                           variant="small"
-                          className="font-open-sans p-2 block text-black hover:text-brand-blue rounded-lg transition-colors"
+                          className="font-open-sans p-2 block text-black hover:text-brand-blue rounded-lg transition-colors dark:text-dark-text dark:hover:text-white"
                         >
                           <Link
                             to={item.path}
@@ -292,31 +327,96 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                       </motion.li>
                     ))}
                   </motion.ul>
-                  
-                  {/* === Mobile Auth Buttons === */}
-                  {isLoggedIn ? (
-                     <motion.div
-                      className="flex flex-col gap-3 py-4 border-t border-white/20"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
+                  <motion.div
+                    className="flex flex-col gap-3 py-4 border-t border-white/20 dark:border-dark-surface/50"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    {isLoggedIn ? (
+                      // If logged in, show Profile and Sign Out
+                      <>
+                        <Link
+                          to="/profile"
+                          className="w-full"
+                          onClick={() => setOpenNav(false)}
+                        >
+                          <Button
+                            fullWidth
+                            variant="text"
+                            size="sm"
+                            className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors dark:text-dark-text dark:border-dark-text/30"
+                          >
+                            My Profile
+                          </Button>
+                        </Link>
+                        <Button
+                          fullWidth
+                          variant="gradient"
+                          size="sm"
+                          className="bg-red-500 text-white hover:bg-red-600 font-semibold shadow-lg"
+                          onClick={() => {
+                            onLogout();
+                            setOpenNav(false);
+                          }}
+                        >
+                          Sign Out
+                        </Button>
+                      </>
+                    ) : (
+                      // If not logged in, show Log In and Sign Up
+                      <>
+                        <Link
+                          to="/login"
+                          className="w-full"
+                          onClick={() => setOpenNav(false)}
+                        >
+                          <Button
+                            fullWidth
+                            variant="text"
+                            size="sm"
+                            className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors dark:text-dark-text dark:border-dark-text/30"
+                          >
+                            Log In
+                          </Button>
+                        </Link>
+                        <Link
+                          to="/signup"
+                          className="w-full"
+                          onClick={() => setOpenNav(false)}
+                        >
+                          <Button
+                            fullWidth
+                            variant="gradient"
+                            size="sm"
+                            className="bg-white text-brand-green hover:bg-gray-100 font-semibold shadow-lg"
+                          >
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </>
+                    )}
+
+                    {/* === THEME TOGGLE BUTTON (Mobile) === */}
+                    <Button
+                      fullWidth
+                      variant="text"
+                      size="sm"
+                      className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors dark:text-dark-text dark:border-dark-text/30 flex items-center justify-center gap-2"
+                      onClick={() => {
+                        toggleTheme();
+                        setOpenNav(false);
+                      }}
                     >
-                       <Button
-                        fullWidth
-                        variant="text"
-                        size="sm"
-                        className="text-red-500 font-open-sans border border-white/20 hover:border-white/40 transition-colors"
-                        onClick={() => {
-                          onLogout();
-                          setOpenNav(false);
-                        }}
-                      >
-                        Sign Out
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    mobileAuthButtons
-                  )}
+                      {theme === "light" ? (
+                        <MoonIcon className="h-5 w-5" />
+                      ) : (
+                        <SunIcon className="h-5 w-5" />
+                      )}
+                      {theme === "light" ? "Dark Mode" : "Light Mode"}
+                    </Button>
+                    {/* === END THEME TOGGLE BUTTON === */}
+                  </motion.div>
                 </div>
               </motion.div>
             )}
@@ -327,13 +427,10 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
   );
 }
 
-// This is the part App.jsx imports
 const Header = ({ isLoggedIn, user, onLogout }) => (
   <header>
-    {/* Pass all props down to the Navbar */}
     <StickyNavbar isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
   </header>
 );
 
 export default Header;
-

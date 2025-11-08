@@ -30,9 +30,9 @@ export function Profile({ user }) {
   const userAge = calculateAge(user.birthdate);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-gray-100 p-4 dark:bg-dark-bg">
       <div className="w-full max-w-4xl mx-auto">
-        <Card className="relative">
+        <Card className="relative dark:bg-dark-surface">
           <CardHeader
             floated={false}
             shadow={false}
@@ -50,35 +50,35 @@ export function Profile({ user }) {
               <img
                 src={user.avatar}
                 alt="User Avatar"
-                className="h-32 w-32 rounded-full mx-auto border-4 border-white object-cover"
+                className="h-32 w-32 rounded-full mx-auto border-4 border-white object-cover dark:border-dark-surface"
               />
             </div>
             <Typography
               variant="h6"
-              className="font-bbh-sans-bartle font-bold text-brand-blue"
+              className="font-bbh-sans-bartle font-bold text-brand-blue dark:text-white"
             >
               {user.name}
             </Typography>
-            <Typography className="font-open-sans text-brand-gray mt-1">
+            <Typography className="font-open-sans text-brand-gray mt-1 dark:text-dark-text">
               {user.email}
             </Typography>
           </CardBody>
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <Card className="md:col-span-2 p-6">
+          <Card className="md:col-span-2 p-6 dark:bg-dark-surface">
             <Typography
               variant="h6"
-              className="font-bbh-sans-bartle text-brand-blue mb-4"
+              className="font-bbh-sans-bartle text-brand-blue mb-4 dark:text-white"
             >
               Player Stats
             </Typography>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="bg-gray-200 p-2 rounded-full">
+                <span className="bg-gray-200 p-2 rounded-full dark:bg-dark-bg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-brand-blue"
+                    className="h-5 w-5 text-brand-blue dark:text-dark-accent"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -90,19 +90,19 @@ export function Profile({ user }) {
                   </svg>
                 </span>
                 <div>
-                  <Typography className="font-open-sans text-sm text-brand-gray">
+                  <Typography className="font-open-sans text-sm text-brand-gray dark:text-dark-text">
                     Favored Position
                   </Typography>
-                  <Typography className="font-open-sans font-semibold text-black">
+                  <Typography className="font-open-sans font-semibold text-black dark:text-white">
                     {user.position}
                   </Typography>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <span className="bg-gray-200 p-2 rounded-full">
+                <span className="bg-gray-200 p-2 rounded-full dark:bg-dark-bg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-brand-blue"
+                    className="h-5 w-5 text-brand-blue dark:text-dark-accent"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -110,19 +110,19 @@ export function Profile({ user }) {
                   </svg>
                 </span>
                 <div>
-                  <Typography className="font-open-sans text-sm text-brand-gray">
+                  <Typography className="font-open-sans text-sm text-brand-gray dark:text-dark-text">
                     Skill Level
                   </Typography>
-                  <Typography className="font-open-sans font-semibold text-black">
+                  <Typography className="font-open-sans font-semibold text-black dark:text-white">
                     {user.skillLevel}
                   </Typography>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <span className="bg-gray-200 p-2 rounded-full">
+                <span className="bg-gray-200 p-2 rounded-full dark:bg-dark-bg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-brand-blue"
+                    className="h-5 w-5 text-brand-blue dark:text-dark-accent"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -136,10 +136,10 @@ export function Profile({ user }) {
                   </svg>
                 </span>
                 <div>
-                  <Typography className="font-open-sans text-sm text-brand-gray">
+                  <Typography className="font-open-sans text-sm text-brand-gray dark:text-dark-text">
                     Preferred Foot
                   </Typography>
-                  <Typography className="font-open-sans font-semibold text-black">
+                  <Typography className="font-open-sans font-semibold text-black dark:text-white">
                     {user.preferredFoot}
                   </Typography>
                 </div>
@@ -147,19 +147,19 @@ export function Profile({ user }) {
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-6 dark:bg-dark-surface">
             <Typography
               variant="h6"
-              className="font-bbh-sans-bartle text-brand-blue mb-4"
+              className="font-bbh-sans-bartle text-brand-blue mb-4 dark:text-white"
             >
               Info
             </Typography>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="bg-gray-200 p-2 rounded-full">
+                <span className="bg-gray-200 p-2 rounded-full dark:bg-dark-bg">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-brand-blue"
+                    className="h-5 w-5 text-brand-blue dark:text-dark-accent"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -171,22 +171,22 @@ export function Profile({ user }) {
                   </svg>
                 </span>
                 <div>
-                  <Typography className="font-open-sans text-sm text-brand-gray">
+                  <Typography className="font-open-sans text-sm text-brand-gray dark:text-dark-text">
                     Age
                   </Typography>
-                  <Typography className="font-open-sans font-semibold text-black">
+                  <Typography className="font-open-sans font-semibold text-black dark:text-white">
                     {userAge} years old
                   </Typography>
                 </div>
               </div>
-              <div className="text-center bg-brand-green/10 p-4 rounded-lg">
+              <div className="text-center bg-brand-green/10 p-4 rounded-lg dark:bg-dark-accent/10">
                 <Typography
                   variant="h4"
-                  className="font-bbh-sans-bartle text-brand-green"
+                  className="font-bbh-sans-bartle text-brand-green dark:text-dark-accent"
                 >
                   {user.matchesPlayed}
                 </Typography>
-                <Typography className="font-open-sans text-sm text-brand-green">
+                <Typography className="font-open-sans text-sm text-brand-green dark:text-dark-accent">
                   Matches Played
                 </Typography>
               </div>
@@ -195,8 +195,10 @@ export function Profile({ user }) {
         </div>
 
         <div className="text-center mt-6">
-          <Link to="/userprofile/1/edit">
-            <Button className="bg-brand-green">Edit Profile</Button>
+          <Link to="/profile/edit">
+            <Button className="bg-brand-green dark:bg-dark-accent">
+              Edit Profile
+            </Button>
           </Link>
         </div>
       </div>

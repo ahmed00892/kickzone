@@ -28,15 +28,17 @@ export function ProfileMenu({ user, onLogout }) {
           <Avatar
             variant="circular"
             alt={user?.name || "User"}
-            src={user?.avatar || "https://docs.material-tailwind.com/img/face-2.jpg"}
-            className="border-2 border-white/80"
+            src={
+              user?.avatar || "https://docs.material-tailwind.com/img/face-2.jpg"
+            }
+            className="border-2 border-white/80 dark:border-dark-bg"
           />
         </motion.div>
       </MenuHandler>
-      <MenuList>
+      <MenuList className="dark:bg-dark-surface dark:border-dark-text/30">
         <MenuItem
-          className="flex items-center gap-2"
-          onClick={() => navigate("/userprofile/1")} 
+          className="flex items-center gap-2 dark:text-dark-text dark:hover:bg-dark-bg"
+          onClick={() => navigate("/profile")}
         >
           <UserCircleIcon strokeWidth={2} className="h-5 w-5" />
           <Typography variant="small" className="font-open-sans font-medium">
@@ -44,7 +46,7 @@ export function ProfileMenu({ user, onLogout }) {
           </Typography>
         </MenuItem>
         <MenuItem
-          className="flex items-center gap-2 text-red-500 hover:!bg-red-50 hover:!text-red-500"
+          className="flex items-center gap-2 text-red-500 hover:!bg-red-50 hover:!text-red-500 dark:hover:!bg-red-500/10 dark:hover:!text-red-500"
           onClick={onLogout} // Call the onLogout prop from useAuth
         >
           <ArrowRightOnRectangleIcon strokeWidth={2} className="h-5 w-5" />
