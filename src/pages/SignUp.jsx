@@ -20,8 +20,8 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: "", 
-    lastName: "", 
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -155,8 +155,8 @@ export function SignUp() {
 
     // 2. Prepare Data for Backend (camelCase -> lowercase)
     const backendData = {
-      firstname: formData.firstName, 
-      lastname: formData.lastName, 
+      firstname: formData.firstName,
+      lastname: formData.lastName,
       email: formData.email.toLowerCase(),
       password: formData.password,
       birthdate: formData.birthdate,
@@ -172,18 +172,22 @@ export function SignUp() {
   };
 
   return (
-    <section className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <Card color="white" shadow={true} className="p-8 w-full max-w-lg">
+    <section className="min-h-screen bg-gray-100 flex items-center justify-center p-4 dark:bg-dark-bg">
+      <Card
+        color="white"
+        shadow={true}
+        className="p-8 w-full max-w-lg dark:bg-dark-surface"
+      >
         <div className="text-center">
           <Typography
             variant="h3"
-            className="font-bbh-sans-bartle font-bold text-brand-blue"
+            className="font-bbh-sans-bartle font-bold text-brand-blue dark:text-white"
           >
             Create Your Player Profile
           </Typography>
           <Typography
             color="gray"
-            className="mt-1 font-open-sans font-normal text-brand-gray"
+            className="mt-1 font-open-sans font-normal text-brand-gray dark:text-dark-text"
           >
             Join Kickzone and get on the pitch.
           </Typography>
@@ -198,6 +202,10 @@ export function SignUp() {
                 color="blue"
                 value={formData.firstName}
                 onChange={handleChange}
+                className="dark:text-white"
+                labelProps={{
+                  className: "dark:text-dark-text",
+                }}
               />
               <Input
                 size="lg"
@@ -206,6 +214,10 @@ export function SignUp() {
                 color="blue"
                 value={formData.lastName}
                 onChange={handleChange}
+                className="dark:text-white"
+                labelProps={{
+                  className: "dark:text-dark-text",
+                }}
               />
             </div>
 
@@ -217,6 +229,10 @@ export function SignUp() {
               color="blue"
               value={formData.email}
               onChange={handleChange}
+              className="dark:text-white"
+              labelProps={{
+                className: "dark:text-dark-text",
+              }}
             />
             <Input
               type={showPassword ? "text" : "password"}
@@ -226,6 +242,10 @@ export function SignUp() {
               color="blue"
               value={formData.password}
               onChange={handleChange}
+              className="dark:text-white"
+              labelProps={{
+                className: "dark:text-dark-text",
+              }}
               icon={
                 <button
                   type="button"
@@ -233,9 +253,9 @@ export function SignUp() {
                   className="p-1"
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                    <EyeSlashIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-gray-500" />
+                    <EyeIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   )}
                 </button>
               }
@@ -248,6 +268,10 @@ export function SignUp() {
               color="blue"
               value={formData.confirmPassword}
               onChange={handleChange}
+              className="dark:text-white"
+              labelProps={{
+                className: "dark:text-dark-text",
+              }}
               icon={
                 <button
                   type="button"
@@ -255,9 +279,9 @@ export function SignUp() {
                   className="p-1"
                 >
                   {showConfirmPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                    <EyeSlashIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-gray-500" />
+                    <EyeIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   )}
                 </button>
               }
@@ -272,27 +296,66 @@ export function SignUp() {
                 color="blue"
                 value={formData.birthdate}
                 onChange={handleChange}
+                className="dark:text-white"
+                labelProps={{
+                  className: "dark:text-dark-text",
+                }}
               />
               <Select
                 label="Favored Position"
                 color="blue"
-                value={formData.favoredPosition} 
-                onChange={handleSelectChange} 
+                value={formData.favoredPosition}
+                onChange={handleSelectChange}
+                className="dark:text-white" // <-- THIS IS THE CHANGE
+                labelProps={{
+                  className: "dark:text-dark-text",
+                }}
+                menuProps={{
+                  className: "dark:bg-dark-surface dark:border-dark-text/30",
+                }}
               >
-                <Option value="Goalkeeper">Goalkeeper</Option>
-                <Option value="Defender">Defender</Option>
-                <Option value="Midfielder">Midfielder</Option>
-                <Option value="Forward">Forward</Option>
-                <Option value="Any">Any</Option>
+                <Option
+                  value="Goalkeeper"
+                  className="dark:text-dark-text dark:hover:bg-dark-bg"
+                >
+                  Goalkeeper
+                </Option>
+                <Option
+                  value="Defender"
+                  className="dark:text-dark-text dark:hover:bg-dark-bg"
+                >
+                  Defender
+                </Option>
+                <Option
+                  value="Midfielder"
+                  className="dark:text-dark-text dark:hover:bg-dark-bg"
+                >
+                  Midfielder
+                </Option>
+                <Option
+                  value="Forward"
+                  className="dark:text-dark-text dark:hover:bg-dark-bg"
+                >
+                  Forward
+                </Option>
+                <Option
+                  value="Any"
+                  className="dark:text-dark-text dark:hover:bg-dark-bg"
+                >
+                  Any
+                </Option>
               </Select>
             </div>
           </div>
 
           {/* Error Display */}
           {error && (
-            <div className="flex items-center gap-2 p-3 my-4 text-sm text-red-700 bg-red-100 rounded-lg">
-              <ExclamationCircleIcon className="w-5 h-5" />
-              <Typography color="red" className="font-open-sans font-medium">
+            <div className="flex items-center gap-2 p-3 my-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-500/10">
+              <ExclamationCircleIcon className="w-5 h-5 text-red-500" />
+              <Typography
+                color="red"
+                className="font-open-sans font-medium dark:text-red-400"
+              >
                 {error}
               </Typography>
             </div>
@@ -302,12 +365,12 @@ export function SignUp() {
             label={
               <Typography
                 variant="small"
-                className="font-open-sans flex items-center font-normal text-brand-gray"
+                className="font-open-sans flex items-center font-normal text-brand-gray dark:text-dark-text"
               >
                 I agree to the&nbsp;
                 <a
                   href="#"
-                  className="font-medium transition-colors hover:text-brand-green"
+                  className="font-medium transition-colors hover:text-brand-green dark:text-dark-accent"
                 >
                   Terms and Conditions
                 </a>
@@ -316,10 +379,14 @@ export function SignUp() {
             checked={formData.agreedToTerms}
             onChange={handleCheckboxChange} // Special handler
             containerProps={{ className: "-ml-2.5" }}
+            className="dark:border-dark-text"
+            labelProps={{
+              className: "dark:text-dark-text",
+            }}
           />
           <Button
             type="submit"
-            className="mt-6 bg-brand-green"
+            className="mt-6 bg-brand-green dark:bg-dark-accent"
             fullWidth
             loading={isLoading} // Material Tailwind loading prop
           >
@@ -327,12 +394,12 @@ export function SignUp() {
           </Button>
           <Typography
             color="gray"
-            className="mt-4 text-center font-open-sans font-normal text-brand-gray"
+            className="mt-4 text-center font-open-sans font-normal text-brand-gray dark:text-dark-text"
           >
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-brand-green hover:underline"
+              className="font-medium text-brand-green hover:underline dark:text-dark-accent"
             >
               Sign In
             </Link>
@@ -344,4 +411,3 @@ export function SignUp() {
 }
 
 export default SignUp;
-

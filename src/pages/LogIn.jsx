@@ -43,13 +43,17 @@ export function LogIn({ onLogin }) {
   };
 
   return (
-    <section className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <Card color="white" shadow={true} className="p-8 w-full max-w-md">
+    <section className="min-h-screen bg-gray-100 flex items-center justify-center p-4 dark:bg-dark-bg">
+      <Card
+        color="white"
+        shadow={true}
+        className="p-8 w-full max-w-md dark:bg-dark-surface"
+      >
         <div className="text-center">
           <div className="flex justify-center items-center gap-2 mb-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-brand-green"
+              className="h-8 w-8 text-brand-green dark:text-dark-accent"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -57,14 +61,14 @@ export function LogIn({ onLogin }) {
             </svg>
             <Typography
               variant="h2"
-              className="font-bbh-sans-bartle font-bold text-brand-blue"
+              className="font-bbh-sans-bartle font-bold text-brand-blue dark:text-white"
             >
               Log In
             </Typography>
           </div>
           <Typography
             color="gray"
-            className="mt-1 font-open-sans font-normal text-brand-gray"
+            className="mt-1 font-open-sans font-normal text-brand-gray dark:text-dark-text"
           >
             Welcome back to Kickzone.
           </Typography>
@@ -77,6 +81,10 @@ export function LogIn({ onLogin }) {
               color="blue"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="dark:text-white"
+              labelProps={{
+                className: "dark:text-dark-text",
+              }}
             />
             <Input
               type={showPassword ? "text" : "password"}
@@ -85,6 +93,10 @@ export function LogIn({ onLogin }) {
               color="blue"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="dark:text-white"
+              labelProps={{
+                className: "dark:text-dark-text",
+              }}
               icon={
                 <button
                   type="button"
@@ -92,9 +104,9 @@ export function LogIn({ onLogin }) {
                   className="p-1"
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                    <EyeSlashIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-gray-500" />
+                    <EyeIcon className="h-5 w-5 text-gray-500 dark:text-dark-text" />
                   )}
                 </button>
               }
@@ -103,9 +115,12 @@ export function LogIn({ onLogin }) {
 
           {/* Error Display */}
           {error && (
-            <div className="flex items-center gap-2 p-3 my-4 text-sm text-red-700 bg-red-100 rounded-lg">
-              <ExclamationCircleIcon className="w-5 h-5" />
-              <Typography color="red" className="font-open-sans font-medium">
+            <div className="flex items-center gap-2 p-3 my-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-500/10">
+              <ExclamationCircleIcon className="w-5 h-5 text-red-500" />
+              <Typography
+                color="red"
+                className="font-open-sans font-medium dark:text-red-400"
+              >
                 {error}
               </Typography>
             </div>
@@ -115,16 +130,20 @@ export function LogIn({ onLogin }) {
             label={
               <Typography
                 variant="small"
-                className="font-open-sans flex items-center font-normal text-brand-gray"
+                className="font-open-sans flex items-center font-normal text-brand-gray dark:text-dark-text"
               >
                 Remember me
               </Typography>
             }
             containerProps={{ className: "-ml-2.5" }}
+            className="dark:border-dark-text"
+            labelProps={{
+              className: "dark:text-dark-text",
+            }}
           />
           <Button
             type="submit"
-            className="mt-6 bg-brand-green"
+            className="mt-6 bg-brand-green dark:bg-dark-accent"
             fullWidth
             loading={isLoading}
           >
@@ -132,12 +151,12 @@ export function LogIn({ onLogin }) {
           </Button>
           <Typography
             color="gray"
-            className="mt-4 text-center font-open-sans font-normal text-brand-gray"
+            className="mt-4 text-center font-open-sans font-normal text-brand-gray dark:text-dark-text"
           >
             Don't have an account?{" "}
             <Link
               to="/signup"
-              className="font-medium text-brand-green hover:underline"
+              className="font-medium text-brand-green hover:underline dark:text-dark-accent"
             >
               Sign Up
             </Link>

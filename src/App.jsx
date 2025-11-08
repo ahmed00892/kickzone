@@ -17,7 +17,7 @@ import AddStadium from "./pages/stadiums/Addstadium.jsx";
 
 import ScrollToTop from "./components/ScrollToTop";
 import { Route, Routes } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth.js";
+import { useAuth } from "./context/AuthContext.jsx";
 import UserProtectedRoute from "./context/UserProtectedRoute.jsx";
 import AdminProtectedRoute from "./context/AdminProtectedRoute.jsx";
 
