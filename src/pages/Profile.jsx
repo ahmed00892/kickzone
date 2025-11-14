@@ -6,8 +6,8 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-// function to calc age from birthdate
 const calculateAge = (birthdate) => {
   if (!birthdate) return null;
   const birthday = new Date(birthdate);
@@ -20,14 +20,24 @@ const calculateAge = (birthdate) => {
   return age;
 };
 
-// Receives user prop from App.jsx
-export function Profile({ user }) {
-  // Fallback to login if no user data
-  if (!user) {
-    return <Navigate to="/login" replace />;
+export function Profile() {
+  // --- GET AUTH STATE FROM CONTEXT ---
+  const { user, isLoggedIn, loading } = useAuth();
+
+  // Show loading state while context is checking auth
+  if (loading) {
+    return (
+      <div className="min-h-screen dark:bg-dark-bg flex items-center justify-center">
+        <Typography className="dark:text-white">Loading...</Typography>
+      </div>
+    );
   }
 
-  const userAge = calculateAge(user.birthdate);
+  // Fallback to login if no user data
+  if (!isLoggedIn || !user) {
+    return <Navigate to="/login" replace />;
+  }
+  const userAge = calculateAge(user.birthday);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 dark:bg-dark-bg">
@@ -48,7 +58,7 @@ export function Profile({ user }) {
           <CardBody className="p-4 text-center">
             <div className="relative -mt-24 mb-2">
               <img
-                src={user.avatar}
+                src={user.profilePicture}
                 alt="User Avatar"
                 className="h-32 w-32 rounded-full mx-auto border-4 border-white object-cover dark:border-dark-surface"
               />
@@ -57,7 +67,7 @@ export function Profile({ user }) {
               variant="h6"
               className="font-bbh-sans-bartle font-bold text-brand-blue dark:text-white"
             >
-              {user.name}
+              {user.firstName} {user.lastName}
             </Typography>
             <Typography className="font-open-sans text-brand-gray mt-1 dark:text-dark-text">
               {user.email}
@@ -94,27 +104,7 @@ export function Profile({ user }) {
                     Favored Position
                   </Typography>
                   <Typography className="font-open-sans font-semibold text-black dark:text-white">
-                    {user.position}
-                  </Typography>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="bg-gray-200 p-2 rounded-full dark:bg-dark-bg">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-brand-blue dark:text-dark-accent"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.787l.09.044a2 2 0 001.608 0l.09-.044A2 2 0 0010 15.763v-5.43a2 2 0 00-1.106-1.787l-.09-.044a2 2 0 00-1.608 0l-.09.044A2 2 0 006 10.333zM10 9.5a1.5 1.5 0 113 0v7a1.5 1.5 0 01-3 0v-7zM14 8.667v7.101a2 2 0 001.106 1.787l.09.044a2 2 0 001.608 0l.09-.044A2 2 0 0018 15.768V8.667a2 2 0 00-1.106-1.787l-.09-.044a2 2 0 00-1.608 0l-.09.044A2 2 0 0014 8.667z" />
-                  </svg>
-                </span>
-                <div>
-                  <Typography className="font-open-sans text-sm text-brand-gray dark:text-dark-text">
-                    Skill Level
-                  </Typography>
-                  <Typography className="font-open-sans font-semibold text-black dark:text-white">
-                    {user.skillLevel}
+                    {user.favouritePosition}
                   </Typography>
                 </div>
               </div>
@@ -175,10 +165,11 @@ export function Profile({ user }) {
                     Age
                   </Typography>
                   <Typography className="font-open-sans font-semibold text-black dark:text-white">
-                    {userAge} years old
+                    {userAge ? `${userAge} years old` : "Not set"}
                   </Typography>
                 </div>
               </div>
+
               <div className="text-center bg-brand-green/10 p-4 rounded-lg dark:bg-dark-accent/10">
                 <Typography
                   variant="h4"

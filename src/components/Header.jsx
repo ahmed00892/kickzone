@@ -16,13 +16,17 @@ import {
 } from "@heroicons/react/24/outline";
 import { useCart } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 
-export function StickyNavbar({ isLoggedIn, user, onLogout }) {
+export function StickyNavbar() {
   const { theme, toggleTheme } = useTheme();
   const [openNav, setOpenNav] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
   const { cart } = useCart();
+  
+  // --- GET AUTH STATE FROM CONTEXT ---
+  const { isLoggedIn, logout } = useAuth();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -127,7 +131,6 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
           className={`sticky top-0 z-50 h-max max-w-full rounded-none px-4 py-3 lg:px-8 lg:py-4 bg-brand-green text-white shadow-2xl font-bbh-sans-bartle backdrop-blur-sm border-none transition-all duration-300 ${
             scrolled ? "bg-brand-green/95 shadow-xl" : "bg-brand-green"
           }
-          // --- HERE IS THE CHANGE ---
           dark:bg-dark-bg dark:shadow-dark-surface/50
           `}
         >
@@ -146,8 +149,8 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
               <div className="mr-4 hidden lg:block">{navList}</div>
               <div className="flex items-center gap-x-3">
                 {isLoggedIn ? (
-                  // If logged in, show the ProfileMenu
-                  <ProfileMenu user={user} onLogout={onLogout} />
+                  // --- ProfileMenu WHEN LOGGED IN ---
+                  <ProfileMenu />
                 ) : (
                   // If not logged in, show Log In and Sign Up
                   <>
@@ -189,7 +192,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
               </div>
               {/* === END CONDITIONAL AUTH RENDER === */}
 
-              {/* === THEME TOGGLE BUTTON (Desktop) === */}
+              {/* ... (Theme Toggle and Cart Icon) ... */}
               <IconButton
                 variant="text"
                 color="white"
@@ -202,9 +205,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                   <SunIcon className="h-6 w-6" />
                 )}
               </IconButton>
-              {/* === END THEME TOGGLE BUTTON === */}
-
-              {/* === CART ICON === */}
+              
               <Link to="/cart">
                 <Badge content={cart?.length || 0} color="green">
                   <IconButton variant="text" color="white">
@@ -212,7 +213,6 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                   </IconButton>
                 </Badge>
               </Link>
-              {/* === END CART ICON === */}
 
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <IconButton
@@ -221,6 +221,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                   ripple={false}
                   onClick={() => setOpenNav(!openNav)}
                 >
+                  {/* ... (hamburger/close icon) ... */}
                   {openNav ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -267,6 +268,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                 className="lg:hidden overflow-hidden dark:bg-dark-surface rounded-lg"
               >
                 <div className="container mx-auto">
+                  {/* ... (mobile navList) ... */}
                   <motion.ul className="flex flex-col gap-2 py-4">
                     {navItems.map((item, index) => (
                       <motion.li
@@ -312,15 +314,16 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                             className="text-brand-blue font-open-sans border border-white/20 hover:border-white/40 transition-colors dark:text-dark-text dark:border-dark-text/30"
                           >
                             My Profile
-                          </Button>
+                          </Button>                        
                         </Link>
                         <Button
                           fullWidth
                           variant="gradient"
                           size="sm"
                           className="bg-red-500 text-white hover:bg-red-600 font-semibold shadow-lg"
+                          // --- 5. USE CONTEXT'S 'logout' FUNCTION ---
                           onClick={() => {
-                            onLogout();
+                            logout();
                             setOpenNav(false);
                           }}
                         >
@@ -361,7 +364,7 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                       </>
                     )}
 
-                    {/* === THEME TOGGLE BUTTON (Mobile) === */}
+                    {/* ... (mobile theme toggle) ... */}
                     <Button
                       fullWidth
                       variant="text"
@@ -379,7 +382,6 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
                       )}
                       {theme === "light" ? "Dark Mode" : "Light Mode"}
                     </Button>
-                    {/* === END THEME TOGGLE BUTTON === */}
                   </motion.div>
                 </div>
               </motion.div>
@@ -390,10 +392,9 @@ export function StickyNavbar({ isLoggedIn, user, onLogout }) {
     </div>
   );
 }
-
-const Header = ({ isLoggedIn, user, onLogout }) => (
+const Header = () => (
   <header>
-    <StickyNavbar isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
+    <StickyNavbar />
   </header>
 );
 

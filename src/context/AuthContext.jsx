@@ -4,66 +4,53 @@ import { useNavigate } from "react-router-dom";
 // 1. Create the Context
 const AuthContext = createContext(null);
 
-// MOCK USER DATA (Same as before)
-const MOCK_USER_DATA = {
-  name: "Abdelghafour KickZone",
-  email: "Abdelghafour@kickzone.com",
-  password: "12345678",
-  avatar:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7ZJzRjI9omI7jwemCbNBMTtbjhNiFerpHGA&s",
-  coverPhoto:
-    "https://7bet.co.uk/blog/wp-content/uploads/2024/06/football-18.jpg",
-  birthdate: "1998-07-15",
-  position: "Forward",
-  skillLevel: "Intermediate",
-  preferredFoot: "Right",
-  matchesPlayed: 78,
-};
-
 // 2. Create the Provider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const isLoggedIn = !!user; 
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true); // For checking auth on load
   const navigate = useNavigate();
 
   // Initialize state from localStorage on first load
   useEffect(() => {
     try {
+      const storedToken = localStorage.getItem("kickzoneToken");
       const storedUser = localStorage.getItem("kickzoneUser");
-      if (storedUser) {
+
+      if (storedToken && storedUser) {
+        setToken(storedToken);
         setUser(JSON.parse(storedUser));
       }
     } catch (error) {
       console.error("Failed to parse user from localStorage", error);
       localStorage.removeItem("kickzoneUser");
+      localStorage.removeItem("kickzoneToken");
+    } finally {
+      setLoading(false); // Done checking auth
     }
   }, []);
 
-  const login = (email, password) => {
-    if (
-      email.toLowerCase() === MOCK_USER_DATA.email.toLowerCase() &&
-      password === MOCK_USER_DATA.password
-    ) {
-      const { password: mockPassword, ...safeUserData } = MOCK_USER_DATA;
-      
-      localStorage.setItem("kickzoneUser", JSON.stringify(safeUserData));
-      setUser(safeUserData);
-      navigate("/");
-      return true;
-    }
-    return false;
+  //SAVE data from API
+  const login = (userData, userToken) => {
+    setUser(userData);
+    setToken(userToken);
+    localStorage.setItem("kickzoneUser", JSON.stringify(userData));
+    localStorage.setItem("kickzoneToken", userToken);
+    // Note: let the page (SignUp/Login) handle navigation
   };
 
   const logout = () => {
-    localStorage.removeItem("kickzoneUser");
     setUser(null);
+    setToken(null);
+    localStorage.removeItem("kickzoneUser");
+    localStorage.removeItem("kickzoneToken");
     navigate("/login");
   };
 
   const updateUser = (newUserData) => {
     try {
-      const storedUser = JSON.parse(localStorage.getItem("kickzoneUser")) || {};
-      const updatedUser = { ...storedUser, ...newUserData };
+      // This merges new data with old data
+      const updatedUser = { ...user, ...newUserData };
       setUser(updatedUser);
       localStorage.setItem("kickzoneUser", JSON.stringify(updatedUser));
       return true;
@@ -73,20 +60,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 3. The value object that will be shared across the app
+  // 3. The value object
   const value = {
     user,
-    isLoggedIn,
+    token, // Provide the token
+    isLoggedIn: !!user, 
+    loading, // Provide loading state
     login,
     logout,
     updateUser,
   };
 
-  // 4. Return the Provider wrapping children
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // 4. Return Provider (wait for auth check to finish)
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
 
-// 5. Custom hook to use the context easily
+// 5. Custom hook
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
