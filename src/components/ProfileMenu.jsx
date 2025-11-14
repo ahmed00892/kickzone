@@ -12,10 +12,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
-// Receives user and onLogout as props
-export function ProfileMenu({ user, onLogout }) {
+export function ProfileMenu() {
   const navigate = useNavigate();
+  // --- GET DATA FROM CONTEXT ---
+  const { user, logout } = useAuth();
+  if (!user) return null; // Safety check
 
   return (
     <Menu>
@@ -27,10 +30,8 @@ export function ProfileMenu({ user, onLogout }) {
         >
           <Avatar
             variant="circular"
-            alt={user?.name || "User"}
-            src={
-              user?.avatar || "https://docs.material-tailwind.com/img/face-2.jpg"
-            }
+            alt={user.firstName || "User"}
+            src={user.profilePicture}
             className="border-2 border-white/80 dark:border-dark-bg"
           />
         </motion.div>
@@ -47,7 +48,8 @@ export function ProfileMenu({ user, onLogout }) {
         </MenuItem>
         <MenuItem
           className="flex items-center gap-2 text-red-500 hover:!bg-red-50 hover:!text-red-500 dark:hover:!bg-red-500/10 dark:hover:!text-red-500"
-          onClick={onLogout} // Call the onLogout prop from useAuth
+          // --- context's logout function ---
+          onClick={logout}
         >
           <ArrowRightOnRectangleIcon strokeWidth={2} className="h-5 w-5" />
           <Typography variant="small" className="font-open-sans font-medium">

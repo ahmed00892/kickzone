@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Input,
@@ -8,19 +8,59 @@ import {
   Option,
   CardBody,
 } from "@material-tailwind/react";
-import { Link, useNavigate } from "react-router-dom";
-import { CameraIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import {
+  CameraIcon,
+  ArrowLeftIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/24/solid";
 
-// Receives user and onUpdateUser props from App.jsx
-export function EditProfile({ user, onUpdateUser }) {
-  // Form state is pre-filled with the current user data
-  const [formData, setFormData] = useState(user);
+import { useAuth } from "../context/AuthContext"; 
 
-  // Separate state for image previews
-  const [avatarPreview, setAvatarPreview] = useState(user.avatar);
-  const [coverPreview, setCoverPreview] = useState(user.coverPhoto);
+// --- API URL ---
+const API_URL = "https://kickzonebe.vercel.app/api/v1";
+
+export function EditProfile() {
+  // --- GET DATA FROM CONTEXT ---
+  const { user, token, updateUser, loading, isLoggedIn } = useAuth();
+
+  // --- FORM STATE & PREVIEWS ---
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    favouritePosition: "",
+    preferredFoot: "",
+    profilePicture: "",
+    coverPhoto: "",
+  });
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  // --- 1. LOAD USER DATA INTO FORM ---
+  // This runs when the 'user' object is loaded from the context
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        // Format date for <input type="date"> (YYYY-MM-DD)
+        birthday: user.birthday
+          ? new Date(user.birthday).toISOString().split("T")[0]
+          : "",
+        favouritePosition: user.favouritePosition || "",
+        preferredFoot: user.preferredFoot || "",
+        profilePicture: user.profilePicture || "",
+        coverPhoto: user.coverPhoto || "",
+      });
+      setAvatarPreview(user.profilePicture);
+      setCoverPreview(user.coverPhoto);
+    }
+  }, [user]); // Re-run if 'user' object changes
 
   // Handler for text inputs
   const handleChange = (e) => {
@@ -47,34 +87,68 @@ export function EditProfile({ user, onUpdateUser }) {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        // reader.result is the base64 Data URL string
         const base64String = reader.result;
 
-        // Update the form data state with the new image string
+        // Update the form data state with the base64 string
         setFormData((prev) => ({ ...prev, [name]: base64String }));
 
         // Update the correct preview state
-        if (name === "avatar") {
+        if (name === "profilePicture") {
           setAvatarPreview(base64String);
         } else if (name === "coverPhoto") {
           setCoverPreview(base64String);
         }
       };
-
       reader.readAsDataURL(file);
     }
   };
 
-  // On submit, call the function from useAuth and redirect
-  const handleSubmit = (e) => {
+  // --- 2. HANDLE SUBMIT (API CALL) ---
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = onUpdateUser(formData);
-    if (success) {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${API_URL}/users/me`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          // Send the token for auth!
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to update profile");
+      }
+
+      // --- SUCCESS! ---
+      // 3. Update the global context with the new user data
+      updateUser(data.user);
       navigate("/profile"); // Go back to profile on success
-    } else {
-      alert("Error: Could not update profile.");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  // --- LOADING & AUTH CHECKS ---
+  if (loading) {
+    return (
+      <div className="min-h-screen dark:bg-dark-bg flex items-center justify-center">
+        <Typography className="dark:text-white">Loading...</Typography>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 dark:bg-dark-bg">
@@ -133,7 +207,7 @@ export function EditProfile({ user, onUpdateUser }) {
                   <CameraIcon className="h-5 w-5 text-brand-blue dark:text-dark-accent" />
                   <input
                     id="avatar-upload"
-                    name="avatar"
+                    name="profilePicture" 
                     type="file"
                     accept="image/*"
                     className="sr-only"
@@ -153,126 +227,69 @@ export function EditProfile({ user, onUpdateUser }) {
               </Typography>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Input
-                  label="Full Name"
-                  name="name"
-                  value={formData.name}
+                  label="First Name"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   color="blue"
                   size="lg"
                   className="dark:text-white"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
+                  labelProps={{ className: "dark:text-dark-text" }}
                 />
+                <Input
+                  label="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  color="blue"
+                  size="lg"
+                  className="dark:text-white"
+                  labelProps={{ className: "dark:text-dark-text" }}
+                />
+
                 <Input
                   label="Email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={user ? user.email : ""} // Get email from 'user'
                   color="blue"
                   size="lg"
                   disabled // cant change email
-                  // --- THIS IS THE CHANGE ---
-                  className="dark:text-black"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
+                  className="dark:text-black" // Disabled text
+                  labelProps={{ className: "dark:text-dark-text" }}
                 />
                 <Input
                   label="Birthdate"
-                  name="birthdate"
+                  name="birthday"
                   type="date"
-                  value={formData.birthdate}
+                  value={formData.birthday}
                   onChange={handleChange}
                   color="blue"
                   size="lg"
                   className="dark:text-white"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
+                  labelProps={{ className: "dark:text-dark-text" }}
                 />
                 <Select
                   label="Favored Position"
-                  name="position"
-                  value={formData.position}
-                  onChange={(value) => handleSelectChange("position", value)}
+                  name="favouritePosition"
+                  value={formData.favouritePosition}
+                  onChange={(value) =>
+                    handleSelectChange("favouritePosition", value)
+                  }
                   color="blue"
                   size="lg"
                   className="dark:text-white"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
+                  labelProps={{ className: "dark:text-dark-text" }}
                   menuProps={{
-                    className:
-                      "dark:bg-dark-surface dark:border-dark-text/30",
+                    className: "dark:bg-dark-surface dark:border-dark-text/30",
                   }}
                 >
-                  <Option
-                    value="Goalkeeper"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Goalkeeper
-                  </Option>
-                  <Option
-                    value="Defender"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Defender
-                  </Option>
-                  <Option
-                    value="Midfielder"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Midfielder
-                  </Option>
-                  <Option
-                    value="Forward"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Forward
-                  </Option>
-                  <Option
-                    value="Any"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Any
-                  </Option>
+                  <Option value="Goalkeeper" className="dark:text-dark-text dark:hover:bg-dark-bg">Goalkeeper</Option>
+                  <Option value="Defender" className="dark:text-dark-text dark:hover:bg-dark-bg">Defender</Option>
+                  <Option value="Midfielder" className="dark:text-dark-text dark:hover:bg-dark-bg">Midfielder</Option>
+                  <Option value="Forward" className="dark:text-dark-text dark:hover:bg-dark-bg">Forward</Option>
+                  <Option value="Any" className="dark:text-dark-text dark:hover:bg-dark-bg">Any</Option>
                 </Select>
-                <Select
-                  label="Skill Level"
-                  name="skillLevel"
-                  value={formData.skillLevel}
-                  onChange={(value) => handleSelectChange("skillLevel", value)}
-                  color="blue"
-                  size="lg"
-                  className="dark:text-white"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
-                  menuProps={{
-                    className:
-                      "dark:bg-dark-surface dark:border-dark-text/30",
-                  }}
-                >
-                  <Option
-                    value="Beginner"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Beginner
-                  </Option>
-                  <Option
-                    value="Intermediate"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Intermediate
-                  </Option>
-                  <Option
-                    value="Advanced"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Advanced
-                  </Option>
-                </Select>
+
                 <Select
                   label="Preferred Foot"
                   name="preferredFoot"
@@ -283,34 +300,30 @@ export function EditProfile({ user, onUpdateUser }) {
                   color="blue"
                   size="lg"
                   className="dark:text-white"
-                  labelProps={{
-                    className: "dark:text-dark-text",
-                  }}
+                  labelProps={{ className: "dark:text-dark-text" }}
                   menuProps={{
-                    className:
-                      "dark:bg-dark-surface dark:border-dark-text/30",
+                    className: "dark:bg-dark-surface dark:border-dark-text/30",
                   }}
                 >
-                  <Option
-                    value="Right"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Right
-                  </Option>
-                  <Option
-                    value="Left"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Left
-                  </Option>
-                  <Option
-                    value="Both"
-                    className="dark:text-dark-text dark:hover:bg-dark-bg"
-                  >
-                    Both
-                  </Option>
+                  <Option value="Right" className="dark:text-dark-text dark:hover:bg-dark-bg">Right</Option>
+                  <Option value="Left" className="dark:text-dark-text dark:hover:bg-dark-bg">Left</Option>
+                  <Option value="Both" className="dark:text-dark-text dark:hover:bg-dark-bg">Both</Option>
                 </Select>
               </div>
+
+              {/* --- Error Display --- */}
+              {error && (
+                <div className="flex items-center gap-2 p-3 my-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-500/10">
+                  <ExclamationCircleIcon className="w-5 h-5 text-red-500" />
+                  <Typography
+                    color="red"
+                    className="font-open-sans font-medium dark:text-red-400"
+                  >
+                    {error}
+                  </Typography>
+                </div>
+              )}
+
               <div className="mt-8 flex justify-end gap-4">
                 <Link to="/profile">
                   <Button
@@ -324,8 +337,9 @@ export function EditProfile({ user, onUpdateUser }) {
                 <Button
                   type="submit"
                   className="bg-brand-green dark:bg-dark-accent"
+                  loading={isLoading}
                 >
-                  Save Changes
+                  {isLoading ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
             </CardBody>

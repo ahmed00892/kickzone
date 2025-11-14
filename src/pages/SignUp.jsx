@@ -14,6 +14,10 @@ import {
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/solid";
+import { useAuth } from "../context/AuthContext";
+
+// ---LIVE API URL ---
+const API_URL = "https://kickzonebe.vercel.app/api/v1";
 
 //  email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +38,9 @@ export function SignUp() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // --- GET THE LOGIN FUNCTION FROM CONTEXT ---
+  const { login } = useAuth();
 
   // State for password visibility toggles
   const [showPassword, setShowPassword] = useState(false);
@@ -121,7 +128,7 @@ export function SignUp() {
       return "Passwords do not match.";
     }
 
-    // New Validation: Age check
+    // Age check
     if (!birthdate) {
       return "Please enter your birthdate.";
     }
@@ -136,7 +143,7 @@ export function SignUp() {
     if (!agreedToTerms) {
       return "You must agree to the Terms and Conditions.";
     }
-    return null; // No errors
+    return null;
   };
 
   // Handle form submission
@@ -153,22 +160,41 @@ export function SignUp() {
 
     setIsLoading(true);
 
-    // 2. Prepare Data for Backend (camelCase -> lowercase)
+    // 2. Prepare Data for Backend
     const backendData = {
-      firstname: formData.firstName,
-      lastname: formData.lastName,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email.toLowerCase(),
       password: formData.password,
-      birthdate: formData.birthdate,
-      favoredposition: formData.favoredPosition,
+      favouritePosition: formData.favoredPosition,
+      birthday: formData.birthdate, 
     };
 
-    // 3. Send Data to Backend (MOCK API OR DB CALL)
-    setTimeout(() => {
-      console.log("User registered:", backendData);
+    try {
+      // 3. Send Data to Backend
+      const response = await fetch(`${API_URL}/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(backendData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle errors from the server (like "User already exists")
+        throw new Error(data.message || "Failed to sign up");
+      }
+
+      // Use the context's login function to save the new session
+      login(data.user, data.token);
+
+      // Navigate to the home page (or profile)
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setIsLoading(false);
-      navigate("/login");
-    }, 1500);
+    }
   };
 
   return (
@@ -306,7 +332,7 @@ export function SignUp() {
                 color="blue"
                 value={formData.favoredPosition}
                 onChange={handleSelectChange}
-                className="dark:text-white" // <-- THIS IS THE CHANGE
+                className="dark:text-white"
                 labelProps={{
                   className: "dark:text-dark-text",
                 }}

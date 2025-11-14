@@ -6,20 +6,25 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ExclamationCircleIcon,
   EyeIcon,
   EyeSlashIcon,
 } from "@heroicons/react/24/solid";
-
-// Receives onLogin prop from App.jsx
-export function LogIn({ onLogin }) {
+import { useAuth } from "../context/AuthContext";
+// ---LIVE API URL ---
+const API_URL = "https://kickzonebe.vercel.app/api/v1";
+export function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // --- GET THE LOGIN FUNCTION FROM CONTEXT ---
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
@@ -28,18 +33,34 @@ export function LogIn({ onLogin }) {
     setError(null);
     setIsLoading(true);
 
-    // Simulate API call delay
-    setTimeout(() => {
-      // Call the login function passed down from App.jsx
+    try {
+      // Send Data to Backend
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.toLowerCase(),
+          password: password,
+        }),
+      });
 
-      const loginSuccess = onLogin(email, password);
+      const data = await response.json();
 
-      if (!loginSuccess) {
-        setError("Invalid email or password. Please try again.");
+      if (!response.ok) {
+        // Handle errors from the server (like "Invalid email or password")
+        throw new Error(data.message || "Failed to sign in");
       }
-      // On success, the useAuth hook handles navigation
+      // Use the context's login function to save the new session
+      login(data.user, data.token);
+
+      // Navigate to the home page
+      navigate("/");
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
