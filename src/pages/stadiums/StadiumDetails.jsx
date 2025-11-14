@@ -114,7 +114,7 @@ export default function StadiumDetails() {
           ← Back to Stadiums
         </button>
       </div>
-         
+      
     </div>
   );
 }

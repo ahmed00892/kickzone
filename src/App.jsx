@@ -12,7 +12,7 @@ import Stadium from "./pages/stadiums/Stadium";
 import StadiumDetails from "./pages/stadiums/StadiumDetails";
 import Cart from "./pages/Cart.jsx";
 import ViewStadiums from "./pages/admin/ViewStadiums.jsx";
-import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
+import ViewStadiumDetails from "./pages/admin/ViewStadiumDetails.jsx";
 import AddStadium from "./pages/stadiums/Addstadium.jsx";
 
 import ScrollToTop from "./components/ScrollToTop";
@@ -60,19 +60,20 @@ function App() {
         <Route path="/cart" element={<Cart />} />
 
         <Route
-          path="/admin/view"
+          path="/view"
           element={
-            <AdminProtectedRoute>
+             <AdminProtectedRoute>
               <ViewStadiums />
             </AdminProtectedRoute>
+          
           }
         />
 
         <Route
-          path="/admin/stadiums/:id"
+          path="/viewStadiums/:id"
           element={
             <AdminProtectedRoute>
-              <AdminStadiumDetails />
+              <ViewStadiumDetails />
             </AdminProtectedRoute>
           }
         />
