@@ -39,6 +39,17 @@ function ViewStadiums() {
         All Stadiums
       </Typography>
 
+            
+      <div className="flex justify-end mb-6">
+        <Button
+          className="bg-green-600 text-white hover:bg-green-700"
+          onClick={() => navigate("/addstadium")}
+        >
+          + Add Stadium
+        </Button>
+      </div>
+
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
         {stadiums.map((stadium) => (
           <Card
