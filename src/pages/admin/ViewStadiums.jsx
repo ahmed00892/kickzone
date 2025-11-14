@@ -33,7 +33,16 @@ function ViewStadiums() {
   }
 
   return (
+    
     <div className="max-w-7xl mx-auto px-8 py-10">
+      <div className="flex justify-end mb-6">
+        <Button
+          className="bg-green-600 text-white hover:bg-green-700"
+          onClick={() => navigate("/addstadium")}
+        >
+          + Add Stadium
+        </Button>
+      </div>
       <Typography variant="h3" color="blue-gray" className="mb-10 font-semibold text-center">
         All Stadiums
       </Typography>
