@@ -51,20 +51,8 @@ export default function Stadiums() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      {/* ✅ Add Stadium Button */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Stadiums</h1>
-
-        {/* ✅ Navigates to /addstadium page */}
-        <Link to="/addstadium">
-          <Button
-            color="green"
-            className="bg-brand-green text-white font-semibold px-6 py-2 rounded-xl 
-            shadow-md hover:bg-brand-green/90 hover:shadow-lg transition-all duration-200"
-          >
-            + Add Stadium
-          </Button>
-        </Link>
       </div>
 
       <h1 className="text-3xl font-bold mb-6 text-gray-800">11vs11 Pitches</h1>
