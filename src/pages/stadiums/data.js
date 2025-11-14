@@ -8,7 +8,7 @@ export const stadiumsData = [
       "Enjoy a professional-grade football field with night lighting, clean facilities, and top-tier turf quality — perfect for full 11-a-side matches.",
     price: 56,
     rating: 5.0,
-    image: "/homeImages/stade.jpeg",
+    image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/e8b88258143373.59f0e4958094d.jpg",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -20,7 +20,7 @@ export const stadiumsData = [
       "Perfect for 11-a-side games with synthetic grass, modern lighting, and seating for fans. Ideal for evening matches.",
     price: 45,
     rating: 4.8,
-    image: "/homeImages/stade2.jpeg",
+    image: "https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/d8f9d7125017935.6110d0d3b3313.jpg",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -32,7 +32,7 @@ export const stadiumsData = [
       "Open football field with fresh grass and ocean breeze. Great for casual matches and training sessions.",
     price: 30,
     rating: 4.9,
-    image: "/homeImages/stade3.jpeg",
+    image: "https://mir-s3-cdn-cf.behance.net/project_modules/2800_webp/de3d39125017935.6110d0d3b488c.jpg",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -44,7 +44,7 @@ export const stadiumsData = [
       "Premium synthetic pitch with high-quality lighting and locker rooms. Ideal for competitive matches and events.",
     price: 60,
     rating: 4.7,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
 
@@ -57,7 +57,7 @@ export const stadiumsData = [
       "Compact field with smooth turf, LED lighting, and digital scoreboard. Great for fast-paced games.",
     price: 25,
     rating: 4.6,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -69,7 +69,7 @@ export const stadiumsData = [
       "A cozy 5-a-side pitch with premium artificial grass and water cooling system. Designed for comfort and performance.",
     price: 22,
     rating: 4.8,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -81,7 +81,7 @@ export const stadiumsData = [
       "High-quality astro turf and clean facilities, perfect for small group games or quick training sessions.",
     price: 28,
     rating: 4.9,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -93,7 +93,7 @@ export const stadiumsData = [
       "Excellent turf quality and covered seating for spectators. A fun choice for after-work matches.",
     price: 24,
     rating: 4.7,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -105,7 +105,7 @@ export const stadiumsData = [
       "Modern 5-a-side stadium with top lighting, locker rooms, and affordable rates. Great for both teams and events.",
     price: 20,
     rating: 4.5,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
   {
@@ -117,7 +117,7 @@ export const stadiumsData = [
       "Synthetic turf with smooth surface, convenient parking, and friendly staff. Great for quick matches.",
     price: 23,
     rating: 4.8,
-    image: "/homeImages/home.jpeg",
+    image: "/homeImages/home.png",
     imageClass: "rounded-2xl shadow-lg",
   },
 ];
