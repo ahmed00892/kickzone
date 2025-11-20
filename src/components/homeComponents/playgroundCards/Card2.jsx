@@ -15,7 +15,8 @@ function Card2() {
       className="w-[300px] sm:w-[340px] md:w-[360px] lg:w-[380px] 
                  rounded-2xl shadow-[0_6px_25px_rgba(128,128,128,0.6)] 
                  hover:shadow-[0_8px_35px_rgba(128,128,128,0.7)]
-                 transition-all duration-500 transform hover:-translate-y-2 bg-white"
+                 transition-all duration-500 transform hover:-translate-y-2
+                 bg-light-surface dark:bg-dark-surface"
     >
       <CardHeader
         floated={false}
@@ -26,41 +27,34 @@ function Card2() {
 
       <CardBody className="p-4 md:p-5">
         <div className="mb-2 flex items-center justify-between">
-          <Typography
-            variant="h6"
-            color="blue-gray"
-            className="font-semibold text-base md:text-lg"
-          >
+          <Typography className="font-semibold text-base md:text-lg dark:text-dark-text">
             Sunny Field, Giza
           </Typography>
-          <Typography color="blue-gray" className="text-sm md:text-base">
+          <Typography className="text-sm md:text-base dark:text-dark-text/70">
             ⭐ 4.8
           </Typography>
         </div>
 
-        <Typography
-          color="gray"
-          className="mb-3 text-sm md:text-base leading-relaxed"
-        >
+        <Typography className="mb-3 text-sm md:text-base leading-relaxed dark:text-dark-text/80">
           Perfect for 5-a-side games with synthetic grass, modern lighting, and
           seating area for fans
         </Typography>
 
         <div className="flex items-baseline gap-1">
-          <Typography
-            variant="h6"
-            className="font-bold text-brand-blue text-base md:text-lg"
-          >
+          <Typography className="font-bold text-brand-blue dark:text-dark-accent text-base md:text-lg">
             $45.00
           </Typography>
-          <Typography className="text-sm text-gray-600">/ hour</Typography>
+          <Typography className="text-sm text-gray-600 dark:text-dark-text/70">
+            / hour
+          </Typography>
         </div>
       </CardBody>
 
       <CardFooter className="pt-2">
         <Button
           fullWidth
-          className="text-white/90 bg-brand-green hover:bg-green-400 text-sm md:text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+          className="text-white/90 bg-brand-green dark:bg-dark-accent hover:bg-green-400 dark:hover:bg-dark-accent/90
+                     text-sm md:text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
           onClick={() => navigate("/stadiums/2")}
         >
           Book Now

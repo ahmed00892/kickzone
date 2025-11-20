@@ -5,13 +5,12 @@ import LastSection from "../components/homeComponents/lastSection/LastSection";
 
 const Home = () => {
   return (
-    <>
-    <HeroSection/>
-    <Cards/>
-    <AboutUs/>
-   <LastSection/>
-    </>
-      
+    <div className="min-h-screen bg-light-bg dark:bg-dark-bg">
+      <HeroSection />
+      <Cards />
+      <AboutUs />
+      <LastSection />
+    </div>
   );
 };
 export default Home;
