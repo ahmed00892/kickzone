@@ -1,77 +1,84 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// 1. Create the Context
 const AuthContext = createContext(null);
 
-// 2. Create the Provider Component
+const API_URL = "https://kickzonebe.vercel.app/api/v1"; // Your backend URL
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true); // For checking auth on load
+  const [token, setToken] = useState(localStorage.getItem("kickzoneToken")); // Load token immediately
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Initialize state from localStorage on first load
   useEffect(() => {
-    try {
-      const storedToken = localStorage.getItem("kickzoneToken");
-      const storedUser = localStorage.getItem("kickzoneUser");
-
-      if (storedToken && storedUser) {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
+    // Define the function to fetch user data
+    const fetchUser = async () => {
+      // If no token, stop loading and return
+      if (!token) {
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Failed to parse user from localStorage", error);
-      localStorage.removeItem("kickzoneUser");
-      localStorage.removeItem("kickzoneToken");
-    } finally {
-      setLoading(false); // Done checking auth
-    }
-  }, []);
 
-  //SAVE data from API
+      try {
+        // Call your new /users/me endpoint
+        const response = await fetch(`${API_URL}/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Success! Set the user data from the DB
+          setUser(data.user); 
+        } else {
+          // If token is invalid/expired (401), clear it
+          console.error("Token invalid, logging out");
+          logout();
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [token]); // Re-run this whenever 'token' changes
+
   const login = (userData, userToken) => {
-    setUser(userData);
+    // 1. Save token to state and LocalStorage
     setToken(userToken);
-    localStorage.setItem("kickzoneUser", JSON.stringify(userData));
     localStorage.setItem("kickzoneToken", userToken);
-    // Note: let the page (SignUp/Login) handle navigation
+    
+    // 2. Save user to state ONLY
+    setUser(userData);
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem("kickzoneUser");
     localStorage.removeItem("kickzoneToken");
     navigate("/login");
   };
 
   const updateUser = (newUserData) => {
-    try {
-      // This merges new data with old data
-      const updatedUser = { ...user, ...newUserData };
-      setUser(updatedUser);
-      localStorage.setItem("kickzoneUser", JSON.stringify(updatedUser));
-      return true;
-    } catch (error) {
-      console.error("Failed to update user:", error);
-      return false;
-    }
+    // Update the local state so the UI changes immediately
+    setUser(newUserData);
   };
 
-  // 3. The value object
   const value = {
     user,
-    token, // Provide the token
-    isLoggedIn: !!user, 
-    loading, // Provide loading state
+    token,
+    isLoggedIn: !!user,
+    loading,
     login,
     logout,
     updateUser,
   };
 
-  // 4. Return Provider (wait for auth check to finish)
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
@@ -79,7 +86,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// 5. Custom hook
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
