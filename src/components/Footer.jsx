@@ -1,18 +1,45 @@
 import { Typography } from "@material-tailwind/react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const SITEMAP = [
   {
     title: "Company",
-    links: ["About Us", "Careers", "Our Team", "Projects"],
+    links: [
+      { name: "About Us", path: "/about" },
+      { name: "Careers", path: "/careers" },
+      { name: "Our Team", path: "/team" },
+      { name: "Projects", path: "/projects" },
+    ],
   },
   {
     title: "Help Center",
-    links: ["Discord", "Twitter", "GitHub", "Contact Us"],
+    links: [
+      {
+        name: "Discord",
+        path: "https://discord.gg/your-discord",
+        external: true,
+      },
+      {
+        name: "Twitter",
+        path: "https://twitter.com/your-twitter",
+        external: true,
+      },
+      {
+        name: "GitHub",
+        path: "https://github.com/ahmed00892/kickzone",
+        external: true,
+      },
+      { name: "Contact Us", path: "/contact" },
+    ],
   },
   {
-    title: "Products",
-    links: ["Templates", "UI Kits", "Icons", "Mockups"],
+    title: "Account",
+    links: [
+      { name: "Profile", path: "/profile" },
+      { name: "Log in", path: "/login" },
+      { name: "Sign up", path: "/signup" },
+    ],
   },
 ];
 
@@ -23,68 +50,202 @@ export function FooterWithSitemap() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, ease: "easeOut" },
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: {
+      opacity: 0,
+      y: 30,
+    },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
     },
   };
 
   const linkHover = {
     hover: {
-      color: "#94c840", // brand-green
-      x: 4,
-      transition: { duration: 0.01 },
+      color: "#94c840",
+      x: 6,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+      },
     },
   };
 
   const iconVariants = {
-    hidden: { opacity: 0, y: 10 },
+    hidden: {
+      opacity: 0,
+      y: 15,
+      scale: 0.9,
+    },
     visible: (i) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3, delay: i * 0.001 },
+      scale: 1,
+      transition: {
+        duration: 0.4,
+        delay: i * 0.05,
+        ease: "backOut",
+      },
     }),
     hover: {
-      scale: 1.1,
-      transition: { type: "spring", stiffness: 300, damping: 12 },
+      scale: 1.15,
+      rotate: [0, -5, 5, 0],
+      transition: {
+        scale: {
+          type: "spring",
+          stiffness: 400,
+          damping: 15,
+        },
+        rotate: {
+          duration: 0.6,
+          ease: "easeInOut",
+        },
+      },
     },
   };
 
+  // Function to render links appropriately
+  const renderLink = (link, index) => {
+    if (link.external) {
+      return (
+        <motion.a
+          key={index}
+          href={link.path}
+          target="_blank"
+          rel="noopener noreferrer"
+          variants={linkHover}
+          whileHover="hover"
+          whileTap={{ scale: 0.98 }}
+          className="
+            text-brand-gray font-normal transition-all duration-200
+            cursor-pointer hover:font-semibold hover:text-brand-green
+            dark:text-dark-text dark:hover:text-brand-green
+            block relative
+          "
+        >
+          <span className="relative">
+            {link.name}
+            <motion.span
+              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green"
+              initial={{ width: 0 }}
+              whileHover={{ width: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            />
+          </span>
+        </motion.a>
+      );
+    }
+
+    return (
+      <motion.div
+        key={index}
+        variants={linkHover}
+        whileHover="hover"
+        whileTap={{ scale: 0.98 }}
+      >
+        <Link
+          to={link.path}
+          className="
+            text-brand-gray font-normal transition-all duration-200
+            cursor-pointer hover:font-semibold hover:text-brand-green
+            dark:text-dark-text dark:hover:text-brand-green
+            block relative
+          "
+        >
+          <span className="relative">
+            {link.name}
+            <motion.span
+              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green"
+              initial={{ width: 0 }}
+              whileHover={{ width: "100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            />
+          </span>
+        </Link>
+      </motion.div>
+    );
+  };
+
   return (
-    <footer className="relative w-full bg-gradient-to-b from-gray-50 to-gray-100 border-t border-gray-200">
-      <div className="mx-auto w-full max-w-7xl px-8">
-        {/* Sitemap Links */}
+    <footer
+      className="
+      relative w-full 
+      bg-gradient-to-b from-gray-50 to-gray-100 
+      border-t border-gray-200
+      dark:from-dark-bg dark:to-dark-surface 
+      dark:border-dark-accent
+      overflow-hidden
+    "
+    >
+      {/* Background decorative element */}
+      <motion.div
+        className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tr from-brand-green/5 to-brand-blue/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"
+        initial={{ scale: 0, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ once: true }}
+      />
+
+      <div className="mx-auto w-full max-w-7xl px-8 relative z-10">
+        {/* Sitemap */}
         <motion.div
-          className="mx-auto grid w-full grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-4"
+          className="
+            mx-auto grid w-full grid-cols-1 gap-10 py-12 
+            md:grid-cols-2 lg:grid-cols-4
+          "
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           {SITEMAP.map(({ title, links }, key) => (
             <motion.div key={key} variants={itemVariants}>
               <Typography
                 variant="small"
-                className="mb-6 font-bold uppercase text-light-brand-blue text-lg border-b-2 border-brand-green pb-2 font-bbh-sans-bartle"
+                className="
+                  mb-6 font-bold uppercase text-brand-blue text-lg 
+                  border-b-2 border-brand-green pb-2 font-bbh-sans-bartle
+                  dark:text-brand-blue
+                  relative
+                "
               >
+                <motion.span
+                  className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-brand-green"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: "easeInOut" }}
+                  viewport={{ once: true }}
+                />
                 {title}
               </Typography>
-              <ul className="space-y-3">
+
+              <ul className="space-y-4">
                 {links.map((link, index) => (
                   <motion.li
                     key={index}
-                    variants={linkHover}
-                    whileHover="hover"
-                    className="text-brand-gray font-normal transition-all duration-300 cursor-pointer hover:font-semibold"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.1 + index * 0.05,
+                      ease: "easeOut",
+                    }}
+                    viewport={{ once: true }}
                   >
-                    {link}
+                    {renderLink(link, index)}
                   </motion.li>
                 ))}
               </ul>
@@ -94,43 +255,84 @@ export function FooterWithSitemap() {
 
         {/* Bottom Section */}
         <motion.div
-          className="flex flex-col items-center justify-center border-t border-gray-300 py-8 md:flex-row md:justify-between"
-          initial={{ opacity: 0, y: 20 }}
+          className="
+            flex flex-col items-center justify-center 
+            border-t border-gray-300 py-8 
+            md:flex-row md:justify-between
+            dark:border-dark-accent
+            relative
+          "
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{
+            duration: 0.8,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
         >
           {/* Copyright */}
           <Typography
             variant="small"
-            className="mb-4 text-center font-normal text-brand-gray md:mb-0"
+            className="
+              mb-4 text-center font-normal text-brand-gray 
+              md:mb-0
+              dark:text-dark-text
+            "
           >
             &copy; {currentYear}{" "}
             <motion.a
-              href="#"
-              className="font-semibold text-brand-blue hover:text-brand-green transition-all duration-300"
+              href="/"
+              className="
+                font-semibold text-brand-blue hover:text-brand-green
+                transition-all duration-300
+                dark:text-brand-blue dark:hover:text-brand-green
+                relative
+              "
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Kickzone
-            </motion.a>
+              <span className="relative">
+                Kickzone
+                <motion.span
+                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </span>
+            </motion.a>{" "}
             . All Rights Reserved.
           </Typography>
 
           {/* Social Icons */}
           <motion.div
-            className="flex gap-6 text-brand-blue sm:justify-center"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            className="
+              flex gap-6 sm:justify-center
+            "
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             {/* Facebook */}
             <motion.a
-              href="#"
+              href="https://facebook.com/your-page"
+              target="_blank"
+              rel="noopener noreferrer"
               custom={0}
               variants={iconVariants}
+              initial="hidden"
+              whileInView="visible"
               whileHover="hover"
-              className="opacity-80 hover:opacity-100 p-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all duration-300"
+              whileTap={{ scale: 0.9 }}
+              viewport={{ once: true }}
+              className="
+                p-2.5 rounded-full 
+                bg-white shadow-sm hover:shadow-lg hover:text-brand-green
+                transition-all duration-300
+                dark:bg-dark-surface text-brand-blue dark:hover:text-brand-green
+                backdrop-blur-sm
+              "
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -148,11 +350,23 @@ export function FooterWithSitemap() {
 
             {/* Instagram */}
             <motion.a
-              href="#"
+              href="https://instagram.com/your-page"
+              target="_blank"
+              rel="noopener noreferrer"
               custom={1}
               variants={iconVariants}
+              initial="hidden"
+              whileInView="visible"
               whileHover="hover"
-              className="opacity-80 hover:opacity-100 p-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all duration-300"
+              whileTap={{ scale: 0.9 }}
+              viewport={{ once: true }}
+              className="
+                p-2.5 rounded-full 
+                bg-white shadow-sm hover:shadow-lg hover:text-brand-green
+                transition-all duration-300
+                dark:bg-dark-surface text-brand-blue dark:hover:text-brand-green
+                backdrop-blur-sm
+              "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -166,11 +380,23 @@ export function FooterWithSitemap() {
 
             {/* Twitter */}
             <motion.a
-              href="#"
+              href="https://twitter.com/your-twitter"
+              target="_blank"
+              rel="noopener noreferrer"
               custom={2}
               variants={iconVariants}
+              initial="hidden"
+              whileInView="visible"
               whileHover="hover"
-              className="opacity-80 hover:opacity-100 p-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all duration-300"
+              whileTap={{ scale: 0.9 }}
+              viewport={{ once: true }}
+              className="
+                p-2.5 rounded-full 
+                bg-white shadow-sm hover:shadow-lg hover:text-brand-green
+                transition-all duration-300
+                dark:bg-dark-surface text-brand-blue dark:hover:text-brand-green
+                backdrop-blur-sm
+              "
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -195,9 +421,20 @@ export function FooterWithSitemap() {
               href="https://github.com/ahmed00892/kickzone"
               custom={3}
               target="_blank"
+              rel="noopener noreferrer"
               variants={iconVariants}
+              initial="hidden"
+              whileInView="visible"
               whileHover="hover"
-              className="opacity-80 hover:opacity-100 p-2 rounded-full bg-white shadow-sm hover:shadow-md transition-all duration-300"
+              whileTap={{ scale: 0.9 }}
+              viewport={{ once: true }}
+              className="
+                p-2.5 rounded-full 
+                bg-white shadow-sm hover:shadow-lg hover:text-brand-green
+                transition-all duration-300
+                dark:bg-dark-surface text-brand-blue dark:hover:text-brand-green
+                backdrop-blur-sm
+              "
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                 <path

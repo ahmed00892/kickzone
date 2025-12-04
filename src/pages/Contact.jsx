@@ -1,16 +1,28 @@
 import React from "react";
 import ContactUs from "../components/ContactUs";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useTheme } from "../context/ThemeContext"; // Import the theme hook
 
 export default function Contact() {
+  const { theme } = useTheme(); // Get current theme
+
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main
+      className={`min-h-screen transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-dark-bg text-dark-text"
+          : "bg-gray-50 text-gray-900"
+      }`}
+    >
       {/* Hero Section with Tailwind background */}
       <section className="relative flex items-center justify-center h-56 md:h-72 bg-contact-bg bg-cover bg-center">
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div
+          className={`absolute inset-0 ${
+            theme === "dark"
+              ? "bg-black bg-opacity-70"
+              : "bg-black bg-opacity-50"
+          }`}
+        />
 
         {/* Text Content */}
         <div className="relative z-10 text-center px-4">
@@ -23,10 +35,18 @@ export default function Contact() {
       {/* Intro Text */}
       <section className="py-12 text-center">
         <div className="container mx-auto px-4">
-          <h2 className="text-xl font-semibold text-blue-900">
-            We’d love to hear from you
+          <h2
+            className={`text-xl font-semibold ${
+              theme === "dark" ? "text-dark-accent" : "text-brand-blue"
+            }`}
+          >
+            We'd love to hear from you
           </h2>
-          <p className="mt-4 max-w-3xl mx-auto text-gray-700">
+          <p
+            className={`mt-4 max-w-3xl mx-auto ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
             Whether you have a question, suggestion, or just want to say hello —
             feel free to reach out to us anytime.
           </p>
@@ -43,22 +63,88 @@ export default function Contact() {
 
           {/* Contact Info with Icons + Animations */}
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow text-center transform transition duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl">
-              <MapPin className="mx-auto text-blue-800 w-8 h-8 mb-2 transition duration-300 group-hover:rotate-12" />
-              <h4 className="mt-3 font-semibold text-gray-800">Our Location</h4>
-              <p className="text-sm text-gray-600 mt-1">Al-Husseiniya, Mecca</p>
+            <div
+              className={`p-6 rounded-2xl shadow text-center transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl ${
+                theme === "dark"
+                  ? "bg-dark-surface hover:bg-gray-800"
+                  : "bg-white hover:bg-gray-50"
+              }`}
+            >
+              <MapPin
+                className={`mx-auto w-8 h-8 mb-2 transition duration-300 ${
+                  theme === "dark" ? "text-dark-accent" : "text-brand-blue"
+                }`}
+              />
+              <h4
+                className={`mt-3 font-semibold ${
+                  theme === "dark" ? "text-dark-text" : "text-gray-800"
+                }`}
+              >
+                Our Location
+              </h4>
+              <p
+                className={`text-sm mt-1 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                Al-Husseiniya, Mecca
+              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow text-center transform transition duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl">
-              <Phone className="mx-auto text-blue-800 w-8 h-8 mb-2" />
-              <h4 className="mt-3 font-semibold text-gray-800">Call Us</h4>
-              <p className="text-sm text-gray-600 mt-1">+966 539 130 130</p>
+            <div
+              className={`p-6 rounded-2xl shadow text-center transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl ${
+                theme === "dark"
+                  ? "bg-dark-surface hover:bg-gray-800"
+                  : "bg-white hover:bg-gray-50"
+              }`}
+            >
+              <Phone
+                className={`mx-auto w-8 h-8 mb-2 ${
+                  theme === "dark" ? "text-dark-accent" : "text-brand-blue"
+                }`}
+              />
+              <h4
+                className={`mt-3 font-semibold ${
+                  theme === "dark" ? "text-dark-text" : "text-gray-800"
+                }`}
+              >
+                Call Us
+              </h4>
+              <p
+                className={`text-sm mt-1 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                +966 539 130 130
+              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow text-center transform transition duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl">
-              <Mail className="mx-auto text-blue-800 w-8 h-8 mb-2" />
-              <h4 className="mt-3 font-semibold text-gray-800">Email</h4>
-              <p className="text-sm text-gray-600 mt-1">info@thepadelmap.com</p>
+            <div
+              className={`p-6 rounded-2xl shadow text-center transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl ${
+                theme === "dark"
+                  ? "bg-dark-surface hover:bg-gray-800"
+                  : "bg-white hover:bg-gray-50"
+              }`}
+            >
+              <Mail
+                className={`mx-auto w-8 h-8 mb-2 ${
+                  theme === "dark" ? "text-dark-accent" : "text-brand-blue"
+                }`}
+              />
+              <h4
+                className={`mt-3 font-semibold ${
+                  theme === "dark" ? "text-dark-text" : "text-gray-800"
+                }`}
+              >
+                Email
+              </h4>
+              <p
+                className={`text-sm mt-1 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                info@thepadelmap.com
+              </p>
             </div>
           </div>
         </div>
