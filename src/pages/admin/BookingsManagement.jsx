@@ -26,7 +26,6 @@ import {
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid";
-import { format } from "date-fns";
 
 const BookingsManagement = () => {
   const [bookings, setBookings] = useState([]);
@@ -36,6 +35,19 @@ const BookingsManagement = () => {
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+
+  // Helper function to format dates
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    return {
+      short: `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`,
+      long: `${days[d.getDay()]}, ${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+    };
+  };
 
   // Mock data for bookings
   const mockBookings = [
@@ -458,7 +470,7 @@ const BookingsManagement = () => {
                       </td>
                       <td className="p-4">
                         <Typography variant="small" className="font-medium text-gray-800 dark:text-dark-text">
-                          {format(booking.date, 'MMM dd, yyyy')}
+                          {formatDate(booking.date).short}
                         </Typography>
                         <Typography variant="small" className="text-xs text-gray-600 dark:text-dark-text/70">
                           {booking.timeSlot} ({booking.hours}h)
@@ -610,7 +622,7 @@ const BookingsManagement = () => {
                       <div className="flex items-center gap-2">
                         <CalendarDaysIcon className="h-5 w-5 text-blue-500" />
                         <Typography className="text-gray-800 dark:text-dark-text">
-                          {format(selectedBooking.date, 'EEEE, MMMM dd, yyyy')}
+                          {formatDate(selectedBooking.date).long}
                         </Typography>
                       </div>
                       <div className="flex items-center gap-2">
@@ -640,7 +652,7 @@ const BookingsManagement = () => {
                         💳 {selectedBooking.paymentMethod}
                       </Typography>
                       <Typography className="text-sm text-gray-600 dark:text-dark-text/70">
-                        Booked on {format(selectedBooking.bookingDate, 'MMM dd, yyyy')}
+                        Booked on {formatDate(selectedBooking.bookingDate).short}
                       </Typography>
                     </div>
                   </div>
