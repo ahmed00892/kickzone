@@ -7,18 +7,18 @@ import {
   SunIcon,
   MoonIcon 
 } from "@heroicons/react/24/solid";
-import { useTheme } from "../context/ThemeContext"; // Adjust path as needed
+import { useTheme } from "../context/ThemeContext";
 
 function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Mobile Sidebar Toggle */}
+      {/* Mobile Sidebar Toggle & Theme Toggle */}
       <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
         <button
-          className="md:hidden p-2 bg-brand-green dark:bg-green-700 text-white rounded-lg"
+          className="md:hidden p-2 bg-green-600 dark:bg-green-700 text-white rounded-lg"
           onClick={() => setSidebarOpen(!sidebarOpen)}
         >
           {sidebarOpen ? (
@@ -30,10 +30,11 @@ function AdminLayout() {
 
         {/* Dark/Light Mode Toggle */}
         <button
-          onClick={toggleDarkMode}
-          className="p-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg"
+          onClick={toggleTheme}
+          className="p-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {darkMode ? (
+          {theme === "dark" ? (
             <SunIcon className="h-6 w-6" />
           ) : (
             <MoonIcon className="h-6 w-6" />
@@ -61,7 +62,7 @@ function AdminLayout() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-0 p-4 md:p-8 overflow-auto w-full dark:text-white">
+      <main className="flex-1 md:ml-0 p-4 md:p-8 overflow-auto w-full dark:text-gray-100">
         <Outlet />
       </main>
     </div>
