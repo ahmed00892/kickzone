@@ -7,6 +7,11 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import {
+  PencilIcon,
+  TrashIcon,
+  EyeIcon,
+} from "@heroicons/react/24/solid";
 
 function ViewStadiums() {
   const navigate = useNavigate();
@@ -28,6 +33,18 @@ function ViewStadiums() {
       image: "/homeImages/stade3.jpeg",
     },
   ];
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this stadium?")) {
+      // Implement delete logic here
+      console.log("Delete stadium with id:", id);
+      // In a real app, you would make an API call here
+    }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/admin/stadiums/edit/${id}`);
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -72,12 +89,27 @@ function ViewStadiums() {
                 {stadium.name}
               </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center p-4 md:p-6 pt-0">
+            <CardFooter className="flex justify-center gap-2 p-4 md:p-6 pt-0">
               <Button
-                className="text-white/90 bg-brand-green hover:bg-green-400 text-sm md:text-base px-4 py-2"
+                className="text-white/90 bg-brand-green hover:bg-green-400 text-sm md:text-base px-3 py-2 flex items-center gap-1"
                 onClick={() => navigate(`/admin/stadiums/${stadium.id}`)}
               >
-                Details
+                <EyeIcon className="h-4 w-4" />
+                View
+              </Button>
+              <Button
+                className="text-white/90 bg-blue-600 hover:bg-blue-700 text-sm md:text-base px-3 py-2 flex items-center gap-1"
+                onClick={() => handleEdit(stadium.id)}
+              >
+                <PencilIcon className="h-4 w-4" />
+                Edit
+              </Button>
+              <Button
+                className="text-white/90 bg-red-600 hover:bg-red-700 text-sm md:text-base px-3 py-2 flex items-center gap-1"
+                onClick={() => handleDelete(stadium.id)}
+              >
+                <TrashIcon className="h-4 w-4" />
+                Delete
               </Button>
             </CardFooter>
           </Card>
