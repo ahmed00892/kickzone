@@ -25,23 +25,9 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminViewStadiums from "./pages/admin/ViewStadiums.jsx";
 import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
 
-// Test Admin Dashboard Component (if you need it)
-function TestAdminDashboard() {
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-4">Test Admin Dashboard</h1>
-      <p>This is a test dashboard. If you see this, admin routing works!</p>
-      <a href="/" className="text-blue-600 hover:underline mt-4 inline-block">
-        ← Back to Home
-      </a>
-    </div>
-  );
-}
-
 // Component to conditionally show Header/Footer
 function LayoutWrapper({ children }) {
   const location = useLocation();
-  const { user, isLoggedIn, logout } = useAuth();
 
   // Don't show Header/Footer for admin routes
   if (location.pathname.startsWith("/admin")) {
@@ -50,7 +36,7 @@ function LayoutWrapper({ children }) {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} user={user} onLogout={logout} />
+      <Header />
       {children}
       <Footer />
     </>
@@ -66,7 +52,7 @@ function App() {
 
       <LayoutWrapper>
         <Routes>
-          {/* ADMIN ROUTES - Without Header/Footer */}
+          {/* ADMIN ROUTES - Without Header/Footer (handled by LayoutWrapper) */}
           <Route
             path="/admin/*"
             element={
@@ -117,7 +103,7 @@ function App() {
             />
           </Route>
 
-          {/* PUBLIC ROUTES */}
+          {/* PUBLIC ROUTES - With Header/Footer (handled by LayoutWrapper) */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={login} />} />
           <Route path="/signup" element={<SignUp />} />
@@ -189,7 +175,26 @@ function App() {
           />
 
           {/* Test simple admin route without layout */}
-          <Route path="/admin-test" element={<TestAdminDashboard />} />
+          <Route
+            path="/admin-test"
+            element={
+              <div className="min-h-screen bg-gray-100 p-8">
+                <h1 className="text-3xl font-bold mb-4">
+                  Test Admin Dashboard
+                </h1>
+                <p>
+                  This is a test dashboard. If you see this, admin routing
+                  works!
+                </p>
+                <a
+                  href="/"
+                  className="text-blue-600 hover:underline mt-4 inline-block"
+                >
+                  ← Back to Home
+                </a>
+              </div>
+            }
+          />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
