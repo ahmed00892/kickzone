@@ -26,12 +26,12 @@ import AdminLayout from "./pages/admin/AdminLayout.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminViewStadiums from "./pages/admin/ViewStadiums.jsx";
 import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
-import BookingsManagement from "./pages/admin/BookingsManagement.jsx"; // New import
+import BookingsManagement from "./pages/admin/BookingsManagement.jsx";
 
 // Component to conditionally show Header/Footer
 function LayoutWrapper({ children }) {
   const location = useLocation();
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn } = useAuth();
 
   // Don't show Header/Footer for admin routes
   if (location.pathname.startsWith("/admin")) {
@@ -40,16 +40,14 @@ function LayoutWrapper({ children }) {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} user={user} onLogout={logout} />
-      {children}
+      <Header isLoggedIn={isLoggedIn} user={user} />
+      <main className="min-h-screen">{children}</main>
       <Footer />
     </>
   );
 }
 
 function App() {
-  const { user, isLoggedIn, login, logout, updateUser } = useAuth();
-
   return (
     <>
       <ScrollToTop />
@@ -196,7 +194,7 @@ function App() {
 
           {/* PUBLIC ROUTES */}
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login onLogin={login} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
@@ -208,7 +206,7 @@ function App() {
             path="/profile"
             element={
               <UserProtectedRoute>
-                <Profile user={user} />
+                <Profile />
               </UserProtectedRoute>
             }
           />
@@ -217,7 +215,7 @@ function App() {
             path="/profile/edit"
             element={
               <UserProtectedRoute>
-                <EditProfile user={user} onUpdateUser={updateUser} />
+                <EditProfile />
               </UserProtectedRoute>
             }
           />
