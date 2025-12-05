@@ -24,7 +24,6 @@ import {
   MagnifyingGlassIcon,
   FunnelIcon,
 } from "@heroicons/react/24/solid";
-import { format } from "date-fns";
 
 const BookingsManagement = () => {
   const [bookings, setBookings] = useState([]);
@@ -34,6 +33,21 @@ const BookingsManagement = () => {
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+
+  // Helper function to format dates without date-fns
+  const formatDate = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return d.toLocaleDateString('en-US', options);
+  };
+
+  const formatSimpleDate = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  };
 
   // Mock data for bookings
   const mockBookings = [
@@ -429,7 +443,7 @@ const BookingsManagement = () => {
                       </td>
                       <td className="p-4">
                         <Typography variant="small" className="font-medium dark:text-dark-text">
-                          {format(booking.date, 'MMM dd, yyyy')}
+                          {formatSimpleDate(booking.date)}
                         </Typography>
                         <Typography variant="small" color="gray" className="text-xs dark:text-dark-text/70">
                           {booking.timeSlot} ({booking.hours}h)
@@ -546,7 +560,7 @@ const BookingsManagement = () => {
                     </Typography>
                     <div className="space-y-1">
                       <Typography>
-                        📅 {format(selectedBooking.date, 'EEEE, MMMM dd, yyyy')}
+                        📅 {formatDate(selectedBooking.date)}
                       </Typography>
                       <Typography>
                         ⏰ {selectedBooking.timeSlot}
@@ -569,7 +583,7 @@ const BookingsManagement = () => {
                         💳 {selectedBooking.paymentMethod}
                       </Typography>
                       <Typography variant="small" color="gray" className="dark:text-dark-text/70">
-                        Booked on {format(selectedBooking.bookingDate, 'MMM dd, yyyy')}
+                        Booked on {formatSimpleDate(selectedBooking.bookingDate)}
                       </Typography>
                     </div>
                   </div>
