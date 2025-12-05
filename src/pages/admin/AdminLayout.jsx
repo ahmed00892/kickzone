@@ -7,7 +7,7 @@ import {
   SunIcon,
   MoonIcon 
 } from "@heroicons/react/24/solid";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext"; // Correct path from src/pages/admin to src/context
 
 function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
