@@ -165,4 +165,49 @@ function ViewStadiums() {
           Confirm Deletion
         </DialogHeader>
         <DialogBody className="dark:text-dark-text">
-          {selectedSt
+          {selectedStadium && (
+            <div className="space-y-4">
+              <Typography>
+                Are you sure you want to delete{" "}
+                <span className="font-bold text-red-600">
+                  {selectedStadium.name}
+                </span>
+                ?
+              </Typography>
+              <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
+                <Typography className="text-sm">
+                  📍 {selectedStadium.location}
+                </Typography>
+                <Typography className="text-sm">
+                  ⭐ {selectedStadium.rating} • ${selectedStadium.price}/hour
+                </Typography>
+              </div>
+              <Typography className="text-sm text-red-600 dark:text-red-400 font-semibold">
+                ⚠️ This action cannot be undone!
+              </Typography>
+            </div>
+          )}
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="blue-gray"
+            onClick={() => setDeleteDialogOpen(false)}
+            className="mr-2"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="gradient"
+            color="red"
+            onClick={confirmDelete}
+          >
+            Delete Stadium
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </div>
+  );
+}
+
+export default ViewStadiums;
