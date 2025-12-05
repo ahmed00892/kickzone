@@ -7,11 +7,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import {
-  PencilIcon,
-  TrashIcon,
-  EyeIcon,
-} from "@heroicons/react/24/solid";
 
 function ViewStadiums() {
   const navigate = useNavigate();
@@ -34,31 +29,18 @@ function ViewStadiums() {
     },
   ];
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this stadium?")) {
-      // Implement delete logic here
-      console.log("Delete stadium with id:", id);
-      // In a real app, you would make an API call here
-    }
-  };
-
-  const handleEdit = (id) => {
-    navigate(`/admin/stadiums/edit/${id}`);
-  };
-
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
       <Typography
         variant="h3"
-        color="blue-gray"
-        className="mb-8 md:mb-10 font-semibold text-center text-2xl md:text-3xl"
+        className="mb-8 md:mb-10 font-semibold text-center text-2xl md:text-3xl text-gray-800 dark:text-dark-text"
       >
         All Stadiums
       </Typography>
 
       <div className="flex justify-end mb-6">
         <Button
-          className="bg-green-600 text-white hover:bg-green-700 text-sm md:text-base px-4 py-2 md:px-6 md:py-3"
+          className="bg-gradient-to-r from-green-600 to-emerald-700 text-white hover:from-green-700 hover:to-emerald-800 text-sm md:text-base px-4 py-2 md:px-6 md:py-3"
           onClick={() => navigate("/addstadium")}
         >
           + Add Stadium
@@ -69,7 +51,7 @@ function ViewStadiums() {
         {stadiums.map((stadium) => (
           <Card
             key={stadium.id}
-            className="group shadow-lg hover:scale-[1.02] transition-transform duration-300 rounded-2xl overflow-hidden"
+            className="group shadow-lg hover:scale-[1.02] transition-transform duration-300 rounded-2xl overflow-hidden bg-white dark:bg-dark-surface"
           >
             <CardHeader
               floated={false}
@@ -84,32 +66,17 @@ function ViewStadiums() {
             <CardBody className="p-4 md:p-6">
               <Typography 
                 variant="h5" 
-                className="font-semibold text-center text-lg md:text-xl"
+                className="font-semibold text-center text-lg md:text-xl text-gray-800 dark:text-dark-text"
               >
                 {stadium.name}
               </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center gap-2 p-4 md:p-6 pt-0">
+            <CardFooter className="flex justify-center p-4 md:p-6 pt-0">
               <Button
-                className="text-white/90 bg-brand-green hover:bg-green-400 text-sm md:text-base px-3 py-2 flex items-center gap-1"
+                className="bg-gradient-to-r from-green-600 to-emerald-700 text-white hover:from-green-700 hover:to-emerald-800 text-sm md:text-base px-4 py-2"
                 onClick={() => navigate(`/admin/stadiums/${stadium.id}`)}
               >
-                <EyeIcon className="h-4 w-4" />
-                View
-              </Button>
-              <Button
-                className="text-white/90 bg-blue-600 hover:bg-blue-700 text-sm md:text-base px-3 py-2 flex items-center gap-1"
-                onClick={() => handleEdit(stadium.id)}
-              >
-                <PencilIcon className="h-4 w-4" />
-                Edit
-              </Button>
-              <Button
-                className="text-white/90 bg-red-600 hover:bg-red-700 text-sm md:text-base px-3 py-2 flex items-center gap-1"
-                onClick={() => handleDelete(stadium.id)}
-              >
-                <TrashIcon className="h-4 w-4" />
-                Delete
+                View Details
               </Button>
             </CardFooter>
           </Card>
