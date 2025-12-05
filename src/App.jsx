@@ -11,7 +11,7 @@ import About from "./pages/About.jsx";
 import Stadium from "./pages/stadiums/Stadium.jsx";
 import StadiumDetails from "./pages/stadiums/StadiumDetails.jsx";
 import AddStadium from "./pages/stadiums/Addstadium.jsx";
-import EditStadium from "./pages/stadiums/EditStadium.jsx"; // New import
+import EditStadium from "./pages/stadiums/EditStadium.jsx";
 import DeleteStadium from "./pages/stadiums/DeleteStadium.jsx";
 import Cart from "./pages/Cart.jsx";
 
@@ -26,6 +26,7 @@ import AdminLayout from "./pages/admin/AdminLayout.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminViewStadiums from "./pages/admin/ViewStadiums.jsx";
 import AdminStadiumDetails from "./pages/admin/AdminStadiumDetails.jsx";
+import BookingsManagement from "./pages/admin/BookingsManagement.jsx"; // New import
 
 // Component to conditionally show Header/Footer
 function LayoutWrapper({ children }) {
@@ -68,24 +69,7 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="stadiums" element={<AdminViewStadiums />} />
             <Route path="stadiums/:id" element={<AdminStadiumDetails />} />
-            <Route
-              path="bookings"
-              element={
-                <div className="p-8 bg-light-bg dark:bg-dark-bg min-h-screen">
-                  <h1 className="text-3xl font-bold text-gray-800 dark:text-dark-text">
-                    Bookings Management
-                  </h1>
-                  <p className="text-gray-600 dark:text-dark-text/70 mt-2">
-                    Manage all stadium bookings and reservations
-                  </p>
-                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
-                    <p className="text-gray-600 dark:text-dark-text/70">
-                      Bookings management interface will be implemented here.
-                    </p>
-                  </div>
-                </div>
-              }
-            />
+            <Route path="bookings" element={<BookingsManagement />} />
             <Route
               path="users"
               element={
@@ -97,9 +81,36 @@ function App() {
                     Manage user accounts and permissions
                   </p>
                   <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
-                    <p className="text-gray-600 dark:text-dark-text/70">
-                      Users management interface will be implemented here.
-                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between p-4 border-b dark:border-dark-text/10">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                            <span className="font-bold text-blue-600 dark:text-blue-400">JD</span>
+                          </div>
+                          <div>
+                            <p className="font-semibold dark:text-dark-text">John Doe</p>
+                            <p className="text-sm text-gray-600 dark:text-dark-text/70">john@example.com</p>
+                          </div>
+                        </div>
+                        <button className="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700">
+                          Edit
+                        </button>
+                      </div>
+                      <div className="flex items-center justify-between p-4 border-b dark:border-dark-text/10">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                            <span className="font-bold text-green-600 dark:text-green-400">JS</span>
+                          </div>
+                          <div>
+                            <p className="font-semibold dark:text-dark-text">Jane Smith</p>
+                            <p className="text-sm text-gray-600 dark:text-dark-text/70">jane@example.com</p>
+                          </div>
+                        </div>
+                        <button className="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700">
+                          Edit
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               }
@@ -114,10 +125,33 @@ function App() {
                   <p className="text-gray-600 dark:text-dark-text/70 mt-2">
                     View performance reports and analytics
                   </p>
-                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
-                    <p className="text-gray-600 dark:text-dark-text/70">
-                      Reports and analytics dashboard will be implemented here.
-                    </p>
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                      <h3 className="font-bold text-lg mb-4 dark:text-dark-text">Revenue Overview</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-dark-text/70">This Month</span>
+                          <span className="font-bold text-green-600 dark:text-green-400">$4,580</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-dark-text/70">Last Month</span>
+                          <span className="font-bold">$3,920</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                      <h3 className="font-bold text-lg mb-4 dark:text-dark-text">Bookings Analysis</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-dark-text/70">Total Bookings</span>
+                          <span className="font-bold">324</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-dark-text/70">Success Rate</span>
+                          <span className="font-bold text-green-600 dark:text-green-400">92%</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               }
@@ -133,9 +167,27 @@ function App() {
                     Configure system settings and preferences
                   </p>
                   <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
-                    <p className="text-gray-600 dark:text-dark-text/70">
-                      System settings will be implemented here.
-                    </p>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-bold text-lg mb-3 dark:text-dark-text">General Settings</h3>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="dark:text-dark-text">Email Notifications</span>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" defaultChecked />
+                              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="dark:text-dark-text">Dark Mode</span>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                              <input type="checkbox" className="sr-only peer" />
+                              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               }
