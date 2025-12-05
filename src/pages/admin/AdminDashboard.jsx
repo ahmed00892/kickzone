@@ -23,38 +23,38 @@ function AdminDashboard() {
       value: "$12,580",
       change: "+12.5%",
       icon: <CurrencyDollarIcon className="h-6 w-6 text-white" />,
-      color: "bg-green-500",
+      color: "bg-gradient-to-r from-green-600 to-emerald-700",
     },
     {
       title: "Total Bookings",
       value: "324",
       change: "+8.2%",
       icon: <CalendarDaysIcon className="h-6 w-6 text-white" />,
-      color: "bg-blue-500",
+      color: "bg-gradient-to-r from-blue-600 to-cyan-700",
     },
     {
       title: "Active Users",
       value: "1,248",
       change: "+5.7%",
       icon: <UsersIcon className="h-6 w-6 text-white" />,
-      color: "bg-purple-500",
+      color: "bg-gradient-to-r from-purple-600 to-violet-700",
     },
     {
       title: "Stadiums",
       value: "3",
       change: "Manage",
       icon: <BuildingLibraryIcon className="h-6 w-6 text-white" />,
-      color: "bg-orange-500",
+      color: "bg-gradient-to-r from-orange-600 to-red-700",
       action: () => navigate("/admin/stadiums"),
     },
   ];
 
   return (
-    <div className="p-4 md:p-6 lg:p-8">
-      <Typography variant="h3" className="font-bold text-gray-800 mb-2 text-2xl md:text-3xl">
+    <div className="p-4 md:p-6 lg:p-8 bg-light-bg dark:bg-dark-bg min-h-screen">
+      <Typography variant="h3" className="font-bold text-gray-800 dark:text-dark-text mb-2 text-2xl md:text-3xl">
         Admin Dashboard
       </Typography>
-      <Typography color="gray" className="mb-6 md:mb-8 text-sm md:text-base">
+      <Typography className="text-gray-600 dark:text-dark-text/70 mb-6 md:mb-8 text-sm md:text-base">
         Welcome back! Here's what's happening with your stadiums today.
       </Typography>
 
@@ -63,23 +63,23 @@ function AdminDashboard() {
         {stats.map((stat, index) => (
           <Card
             key={index}
-            className="shadow-lg hover:shadow-xl transition-shadow"
+            className="shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-dark-surface"
           >
             <CardBody className="p-4 md:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <Typography color="blue-gray" className="text-sm font-medium">
+                  <Typography className="text-sm font-medium text-gray-600 dark:text-dark-text/70">
                     {stat.title}
                   </Typography>
-                  <Typography variant="h4" className="mt-2 font-bold text-xl md:text-2xl">
+                  <Typography variant="h4" className="mt-2 font-bold text-xl md:text-2xl text-gray-800 dark:text-dark-text">
                     {stat.value}
                   </Typography>
-                  <Typography className="mt-1 text-sm font-medium text-green-600">
+                  <Typography className="mt-1 text-sm font-medium text-green-600 dark:text-green-400">
                     {stat.change}
                   </Typography>
                 </div>
                 <div
-                  className={`${stat.color} p-3 rounded-full cursor-pointer hover:opacity-90`}
+                  className={`${stat.color} p-3 rounded-full cursor-pointer hover:opacity-90 transition-opacity`}
                   onClick={stat.action}
                 >
                   {stat.icon}
@@ -91,32 +91,32 @@ function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <Card className="shadow-lg mb-6 md:mb-8">
+      <Card className="shadow-lg mb-6 md:mb-8 bg-white dark:bg-dark-surface">
         <CardBody className="p-4 md:p-6">
-          <Typography variant="h5" className="font-bold mb-4 md:mb-6 text-lg md:text-xl">
+          <Typography variant="h5" className="font-bold mb-4 md:mb-6 text-lg md:text-xl text-gray-800 dark:text-dark-text">
             Quick Actions
           </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <Button
-              className="bg-gradient-to-r from-green-500 to-emerald-600 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
+              className="bg-gradient-to-r from-green-600 to-emerald-700 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
               onClick={() => navigate("/addstadium")}
             >
               Add Stadium
             </Button>
             <Button
-              className="bg-gradient-to-r from-blue-500 to-cyan-600 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
+              className="bg-gradient-to-r from-blue-600 to-cyan-700 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
               onClick={() => navigate("/admin/bookings")}
             >
               View Bookings
             </Button>
             <Button
-              className="bg-gradient-to-r from-purple-500 to-violet-600 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
+              className="bg-gradient-to-r from-purple-600 to-violet-700 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
               onClick={() => navigate("/admin/users")}
             >
               Manage Users
             </Button>
             <Button
-              className="bg-gradient-to-r from-orange-500 to-red-600 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
+              className="bg-gradient-to-r from-orange-600 to-red-700 text-sm md:text-base px-3 py-2 md:px-4 md:py-3"
               onClick={() => navigate("/admin/reports")}
             >
               Generate Report
@@ -126,32 +126,32 @@ function AdminDashboard() {
       </Card>
 
       {/* Stadium Performance */}
-      <Card className="shadow-lg">
+      <Card className="shadow-lg bg-white dark:bg-dark-surface">
         <CardBody className="p-4 md:p-6">
-          <Typography variant="h5" className="font-bold mb-4 md:mb-6 text-lg md:text-xl">
+          <Typography variant="h5" className="font-bold mb-4 md:mb-6 text-lg md:text-xl text-gray-800 dark:text-dark-text">
             Stadium Performance
           </Typography>
           <div className="space-y-3 md:space-y-4">
             <div>
               <div className="flex justify-between mb-1">
-                <Typography className="text-sm md:text-base">Green Turf Stadium</Typography>
-                <Typography className="font-semibold text-sm md:text-base">78%</Typography>
+                <Typography className="text-sm md:text-base text-gray-800 dark:text-dark-text">Green Turf Stadium</Typography>
+                <Typography className="font-semibold text-sm md:text-base text-gray-800 dark:text-dark-text">78%</Typography>
               </div>
-              <Progress value={78} color="green" className="h-2" />
+              <Progress value={78} color="green" className="h-2 bg-gray-200 dark:bg-gray-700" />
             </div>
             <div>
               <div className="flex justify-between mb-1">
-                <Typography className="text-sm md:text-base">Sunny Field</Typography>
-                <Typography className="font-semibold text-sm md:text-base">65%</Typography>
+                <Typography className="text-sm md:text-base text-gray-800 dark:text-dark-text">Sunny Field</Typography>
+                <Typography className="font-semibold text-sm md:text-base text-gray-800 dark:text-dark-text">65%</Typography>
               </div>
-              <Progress value={65} color="blue" className="h-2" />
+              <Progress value={65} color="blue" className="h-2 bg-gray-200 dark:bg-gray-700" />
             </div>
             <div>
               <div className="flex justify-between mb-1">
-                <Typography className="text-sm md:text-base">Victory Field</Typography>
-                <Typography className="font-semibold text-sm md:text-base">58%</Typography>
+                <Typography className="text-sm md:text-base text-gray-800 dark:text-dark-text">Victory Field</Typography>
+                <Typography className="font-semibold text-sm md:text-base text-gray-800 dark:text-dark-text">58%</Typography>
               </div>
-              <Progress value={58} color="orange" className="h-2" />
+              <Progress value={58} color="orange" className="h-2 bg-gray-200 dark:bg-gray-700" />
             </div>
           </div>
         </CardBody>
