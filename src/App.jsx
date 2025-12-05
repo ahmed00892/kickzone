@@ -11,7 +11,8 @@ import About from "./pages/About.jsx";
 import Stadium from "./pages/stadiums/Stadium.jsx";
 import StadiumDetails from "./pages/stadiums/StadiumDetails.jsx";
 import AddStadium from "./pages/stadiums/Addstadium.jsx";
-import DeleteStadium from "./pages/stadiums/DeleteStadium.jsx"; // New import
+import EditStadium from "./pages/stadiums/EditStadium.jsx"; // New import
+import DeleteStadium from "./pages/stadiums/DeleteStadium.jsx";
 import Cart from "./pages/Cart.jsx";
 
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -77,6 +78,11 @@ function App() {
                   <p className="text-gray-600 dark:text-dark-text/70 mt-2">
                     Manage all stadium bookings and reservations
                   </p>
+                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                    <p className="text-gray-600 dark:text-dark-text/70">
+                      Bookings management interface will be implemented here.
+                    </p>
+                  </div>
                 </div>
               }
             />
@@ -90,6 +96,11 @@ function App() {
                   <p className="text-gray-600 dark:text-dark-text/70 mt-2">
                     Manage user accounts and permissions
                   </p>
+                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                    <p className="text-gray-600 dark:text-dark-text/70">
+                      Users management interface will be implemented here.
+                    </p>
+                  </div>
                 </div>
               }
             />
@@ -103,6 +114,11 @@ function App() {
                   <p className="text-gray-600 dark:text-dark-text/70 mt-2">
                     View performance reports and analytics
                   </p>
+                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                    <p className="text-gray-600 dark:text-dark-text/70">
+                      Reports and analytics dashboard will be implemented here.
+                    </p>
+                  </div>
                 </div>
               }
             />
@@ -116,6 +132,11 @@ function App() {
                   <p className="text-gray-600 dark:text-dark-text/70 mt-2">
                     Configure system settings and preferences
                   </p>
+                  <div className="mt-6 bg-white dark:bg-dark-surface rounded-lg p-6 shadow">
+                    <p className="text-gray-600 dark:text-dark-text/70">
+                      System settings will be implemented here.
+                    </p>
+                  </div>
                 </div>
               }
             />
@@ -169,44 +190,19 @@ function App() {
           />
 
           <Route
-            path="/deletestadium"
+            path="/editstadium/:id"
             element={
               <AdminProtectedRoute>
-                <DeleteStadium />
+                <EditStadium />
               </AdminProtectedRoute>
             }
           />
 
           <Route
-            path="/editstadium/:id"
+            path="/deletestadium"
             element={
               <AdminProtectedRoute>
-                <div className="min-h-screen bg-light-bg dark:bg-dark-bg py-12 px-4">
-                  <div className="max-w-2xl mx-auto bg-white dark:bg-dark-surface rounded-2xl shadow-lg p-8">
-                    <h2 className="text-4xl font-bold text-gray-800 dark:text-dark-text mb-8 text-center">
-                      Edit Stadium
-                    </h2>
-                    <div className="text-center py-8">
-                      <p className="text-gray-600 dark:text-dark-text/70 mb-6">
-                        Edit stadium functionality coming soon!
-                      </p>
-                      <div className="flex gap-4 justify-center">
-                        <button
-                          onClick={() => window.history.back()}
-                          className="bg-gray-300 dark:bg-dark-text/20 text-gray-800 dark:text-dark-text px-6 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-dark-text/30 transition-colors"
-                        >
-                          Go Back
-                        </button>
-                        <button
-                          onClick={() => (window.location.href = "/stadiums")}
-                          className="bg-brand-green dark:bg-dark-accent text-white px-6 py-2 rounded-lg hover:bg-brand-green/90 dark:hover:bg-dark-accent/90 transition-colors"
-                        >
-                          View Stadiums
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <DeleteStadium />
               </AdminProtectedRoute>
             }
           />
