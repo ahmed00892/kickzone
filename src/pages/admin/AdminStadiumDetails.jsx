@@ -47,15 +47,15 @@ function AdminStadiumDetails() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-12">
+    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-12">
       <div
-        className="flex flex-col md:flex-row items-center gap-10 rounded-2xl 
+        className="flex flex-col lg:flex-row items-center gap-6 md:gap-10 rounded-2xl 
         shadow-[0_6px_25px_rgba(128,128,128,0.6)] 
         hover:shadow-[0_8px_35px_rgba(128,128,128,0.7)]
-        transition-all duration-500 transform hover:-translate-y-2 bg-white p-6"
+        transition-all duration-500 transform hover:-translate-y-1 bg-white p-4 md:p-6"
       >
         
-        <div className="overflow-hidden rounded-2xl w-full md:w-1/2 h-[350px]">
+        <div className="overflow-hidden rounded-2xl w-full lg:w-1/2 h-[250px] md:h-[350px]">
           <img
             src={stadium.image}
             alt={stadium.name}
@@ -63,27 +63,38 @@ function AdminStadiumDetails() {
           />
         </div>
 
-      
-        <div className="flex-1 space-y-4">
-          <Typography variant="h4" className="font-bold text-blue-gray-800">
+        <div className="flex-1 space-y-3 md:space-y-4 w-full">
+          <Typography 
+            variant="h4" 
+            className="font-bold text-blue-gray-800 text-xl md:text-2xl lg:text-3xl"
+          >
             {stadium.name}
           </Typography>
 
-          <Typography color="gray">📍 {stadium.location}</Typography>
-          <Typography color="gray">👥 Capacity: {stadium.capacity}</Typography>
-          <Typography color="gray">
+          <Typography color="gray" className="text-sm md:text-base">
+            📍 {stadium.location}
+          </Typography>
+          <Typography color="gray" className="text-sm md:text-base">
+            👥 Capacity: {stadium.capacity}
+          </Typography>
+          <Typography color="gray" className="text-sm md:text-base">
             💰 Price: ${stadium.price.toFixed(2)} / hour
           </Typography>
-          <Typography color="gray">⭐ Rating: {stadium.rating}</Typography>
+          <Typography color="gray" className="text-sm md:text-base">
+            ⭐ Rating: {stadium.rating}
+          </Typography>
 
-          <Typography className="text-gray-700">{stadium.description}</Typography>
+          <Typography className="text-gray-700 text-sm md:text-base">
+            {stadium.description}
+          </Typography>
 
-          <div className="pt-4">
+          <div className="pt-3 md:pt-4">
             <Button
               fullWidth
               className="text-white/90 bg-brand-green hover:bg-green-400 
               text-sm md:text-base transition-all duration-300
-              hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+              hover:scale-105 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+              px-4 py-3 md:px-6 md:py-4"
             >
               Book Now
             </Button>
