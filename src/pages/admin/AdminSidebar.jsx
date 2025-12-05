@@ -14,12 +14,20 @@ import {
   ChartBarIcon,
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
+  PlusIcon,
+  PencilIcon,
+  TrashIcon,
 } from "@heroicons/react/24/solid";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function AdminSidebar() {
+function AdminSidebar({ onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    if (onClose) onClose();
+  };
 
   const menuItems = [
     {
@@ -54,18 +62,36 @@ function AdminSidebar() {
     },
   ];
 
+  const stadiumActions = [
+    {
+      label: "Add Stadium",
+      icon: <PlusIcon className="h-4 w-4" />,
+      path: "/addstadium",
+    },
+    {
+      label: "Edit Stadiums",
+      icon: <PencilIcon className="h-4 w-4" />,
+      path: "/admin/stadiums",
+    },
+    {
+      label: "Delete Stadiums",
+      icon: <TrashIcon className="h-4 w-4" />,
+      path: "/deletestadium",
+    },
+  ];
+
   return (
-    <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 rounded-none">
+    <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 rounded-none bg-white dark:bg-dark-surface">
       <div className="mb-6 p-4">
-        <Typography variant="h5" color="blue-gray" className="font-bold">
+        <Typography variant="h5" color="blue-gray" className="font-bold dark:text-dark-text">
           ⚽ StadiumPro Admin
         </Typography>
-        <Typography color="gray" className="mt-2 text-sm">
+        <Typography color="gray" className="mt-2 text-sm dark:text-dark-text/70">
           Complete Stadium Management
         </Typography>
       </div>
 
-      <div className="mb-4 p-4 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+      <div className="mb-4 p-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
         <Typography variant="h6" className="text-white font-bold">
           Welcome, Admin!
         </Typography>
@@ -79,23 +105,50 @@ function AdminSidebar() {
           <ListItem
             key={index}
             selected={location.pathname === item.path}
-            onClick={() => navigate(item.path)}
-            className={`${
-              location.pathname === item.path
-                ? "bg-green-100 text-green-800 font-semibold"
-                : "hover:bg-gray-100"
-            } py-3 rounded-lg`}
+            onClick={() => handleNavigation(item.path)}
+            className={`
+              ${location.pathname === item.path
+                ? "bg-green-100 dark:bg-dark-accent/20 text-green-800 dark:text-dark-accent font-semibold"
+                : "hover:bg-gray-100 dark:hover:bg-dark-text/10"
+              } py-3 rounded-lg dark:text-dark-text
+            `}
           >
             <ListItemPrefix className="mr-3">{item.icon}</ListItemPrefix>
             {item.label}
           </ListItem>
         ))}
 
-        <hr className="my-4 border-gray-200" />
+        <hr className="my-4 border-gray-200 dark:border-dark-text/20" />
+
+        {/* Stadium Management Actions */}
+        <div className="px-4 mb-2">
+          <Typography variant="small" color="gray" className="font-semibold dark:text-dark-text/70">
+            STADIUM ACTIONS
+          </Typography>
+        </div>
+
+        {stadiumActions.map((action, index) => (
+          <ListItem
+            key={index}
+            selected={location.pathname === action.path}
+            onClick={() => handleNavigation(action.path)}
+            className={`
+              ${location.pathname === action.path
+                ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 font-semibold"
+                : "hover:bg-gray-100 dark:hover:bg-dark-text/10"
+              } py-3 rounded-lg dark:text-dark-text
+            `}
+          >
+            <ListItemPrefix className="mr-3">{action.icon}</ListItemPrefix>
+            {action.label}
+          </ListItem>
+        ))}
+
+        <hr className="my-4 border-gray-200 dark:border-dark-text/20" />
 
         <ListItem
-          onClick={() => navigate("/")}
-          className="py-3 rounded-lg hover:bg-gray-100 text-red-600 hover:text-red-700"
+          onClick={() => handleNavigation("/")}
+          className="py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-text/10 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
         >
           <ListItemPrefix className="mr-3">
             <ArrowRightOnRectangleIcon className="h-5 w-5" />
