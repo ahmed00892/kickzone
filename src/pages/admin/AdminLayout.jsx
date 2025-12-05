@@ -1,56 +1,34 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar.jsx";
-import { 
-  Bars3Icon, 
-  XMarkIcon,
-  SunIcon,
-  MoonIcon 
-} from "@heroicons/react/24/solid";
-import { useTheme } from "../../context/ThemeContext"; // Correct path from src/pages/admin to src/context
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Mobile Sidebar Toggle & Theme Toggle */}
-      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
-        <button
-          className="md:hidden p-2 bg-green-600 dark:bg-green-700 text-white rounded-lg"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          {sidebarOpen ? (
-            <XMarkIcon className="h-6 w-6" />
-          ) : (
-            <Bars3Icon className="h-6 w-6" />
-          )}
-        </button>
-
-        {/* Dark/Light Mode Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="p-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-        >
-          {theme === "dark" ? (
-            <SunIcon className="h-6 w-6" />
-          ) : (
-            <MoonIcon className="h-6 w-6" />
-          )}
-        </button>
-      </div>
+    <div className="flex min-h-screen bg-gray-50 dark:bg-dark-bg">
+      {/* Mobile Sidebar Toggle */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-lg shadow-lg"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? (
+          <XMarkIcon className="h-6 w-6" />
+        ) : (
+          <Bars3Icon className="h-6 w-6" />
+        )}
+      </button>
 
       {/* Sidebar - Mobile & Desktop */}
       <div
         className={`
-          ${sidebarOpen ? "block" : "hidden"} 
-          md:block fixed md:relative z-40
-          h-screen
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+          md:translate-x-0 transition-transform duration-300
+          fixed md:relative z-40 h-screen
         `}
       >
-        <AdminSidebar onClose={() => setSidebarOpen(false)} />
+        <AdminSidebar />
       </div>
 
       {/* Overlay for mobile sidebar */}
@@ -62,7 +40,7 @@ function AdminLayout() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-0 p-4 md:p-8 overflow-auto w-full dark:text-gray-100">
+      <main className="flex-1 md:ml-0 p-4 md:p-8 overflow-auto w-full">
         <Outlet />
       </main>
     </div>
