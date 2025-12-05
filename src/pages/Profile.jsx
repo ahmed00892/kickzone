@@ -5,7 +5,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const calculateAge = (birthdate) => {
@@ -21,10 +21,9 @@ const calculateAge = (birthdate) => {
 };
 
 export function Profile() {
-  // --- GET AUTH STATE FROM CONTEXT ---
   const { user, isLoggedIn, loading } = useAuth();
+  const navigate = useNavigate(); // Add this for navigation
 
-  // Show loading state while context is checking auth
   if (loading) {
     return (
       <div className="min-h-screen dark:bg-dark-bg flex items-center justify-center">
@@ -33,15 +32,38 @@ export function Profile() {
     );
   }
 
-  // Fallback to login if no user data
   if (!isLoggedIn || !user) {
     return <Navigate to="/login" replace />;
   }
+
+  // Check if user is admin (you need to add this to your user object)
+  const isAdmin = user.role === "admin" || user.isAdmin === true; // Adjust based on your user structure
+
   const userAge = calculateAge(user.birthday);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 dark:bg-dark-bg">
       <div className="w-full max-w-4xl mx-auto">
+        {/* Add Admin Dashboard Button (Only for Admins) */}
+        {isAdmin && (
+          <div className="mb-6 flex justify-end">
+            <Button
+              onClick={() => navigate("/admin/dashboard")}
+              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 flex items-center gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+              </svg>
+              Admin Dashboard
+            </Button>
+          </div>
+        )}
+
         <Card className="relative dark:bg-dark-surface">
           <CardHeader
             floated={false}
@@ -62,7 +84,15 @@ export function Profile() {
                 alt="User Avatar"
                 className="h-32 w-32 rounded-full mx-auto border-4 border-white object-cover dark:border-dark-surface"
               />
+
+              {/* Admin Badge */}
+              {isAdmin && (
+                <div className="absolute bottom-2 right-1/2 translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  ADMIN
+                </div>
+              )}
             </div>
+
             <Typography
               variant="h6"
               className="font-bbh-sans-bartle font-bold text-brand-blue dark:text-white"
@@ -76,6 +106,7 @@ export function Profile() {
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          {/* Rest of your profile code remains the same */}
           <Card className="md:col-span-2 p-6 dark:bg-dark-surface">
             <Typography
               variant="h6"
@@ -185,12 +216,22 @@ export function Profile() {
           </Card>
         </div>
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 space-x-4">
           <Link to="/profile/edit">
             <Button className="bg-brand-green dark:bg-dark-accent">
               Edit Profile
             </Button>
           </Link>
+
+          {/* Optional: Add another admin button here if needed */}
+          {isAdmin && (
+            <Button
+              onClick={() => navigate("/admin/stadiums")}
+              className="bg-gradient-to-r from-blue-500 to-cyan-600"
+            >
+              Manage Stadiums
+            </Button>
+          )}
         </div>
       </div>
     </div>
